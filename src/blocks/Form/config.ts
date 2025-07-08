@@ -1,30 +1,30 @@
-import type { Block } from 'payload'
-
 import {
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import type { Block } from 'payload'
 
 export const FormBlock: Block = {
   slug: 'formBlock',
-  interfaceName: 'FormBlock',
+  labels: {
+    plural: 'Form Blocks',
+    singular: 'Form Block',
+  },
   fields: [
     {
       name: 'form',
-      type: 'relationship',
       relationTo: 'forms',
       required: true,
+      type: 'relationship',
     },
     {
+      label: 'Enable Intro Content',
       name: 'enableIntro',
       type: 'checkbox',
-      label: 'Enable Intro Content',
     },
     {
-      name: 'introContent',
-      type: 'richText',
       admin: {
         condition: (_, { enableIntro }) => Boolean(enableIntro),
       },
@@ -39,13 +39,12 @@ export const FormBlock: Block = {
         },
       }),
       label: 'Intro Content',
+      name: 'introContent',
+      type: 'richText',
     },
   ],
   graphQL: {
     singularName: 'FormBlock',
   },
-  labels: {
-    plural: 'Form Blocks',
-    singular: 'Form Block',
-  },
+  interfaceName: 'FormBlock',
 }

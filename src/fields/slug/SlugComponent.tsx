@@ -1,11 +1,11 @@
 'use client'
-import React, { useCallback, useEffect } from 'react'
-import { TextFieldClientProps } from 'payload'
+import './index.scss'
 
-import { useField, Button, TextInput, FieldLabel, useFormFields, useForm } from '@payloadcms/ui'
+import { Button, FieldLabel, TextInput, useField, useForm, useFormFields } from '@payloadcms/ui'
+import { TextFieldClientProps } from 'payload'
+import React, { useCallback, useEffect } from 'react'
 
 import { formatSlug } from './formatSlug'
-import './index.scss'
 
 type SlugComponentProps = {
   fieldToUse: string
@@ -13,9 +13,9 @@ type SlugComponentProps = {
 } & TextFieldClientProps
 
 export const SlugComponent: React.FC<SlugComponentProps> = ({
+  checkboxFieldPath: checkboxFieldPathFromProps,
   field,
   fieldToUse,
-  checkboxFieldPath: checkboxFieldPathFromProps,
   path,
   readOnly: readOnlyFromProps,
 }) => {
@@ -25,7 +25,7 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
     ? `${path}.${checkboxFieldPathFromProps}`
     : checkboxFieldPathFromProps
 
-  const { value, setValue } = useField<string>({ path: path || field.name })
+  const { setValue, value } = useField<string>({ path: path || field.name })
 
   const { dispatchFields } = useForm()
 
@@ -57,8 +57,8 @@ export const SlugComponent: React.FC<SlugComponentProps> = ({
       e.preventDefault()
 
       dispatchFields({
-        type: 'UPDATE',
         path: checkboxFieldPath,
+        type: 'UPDATE',
         value: !checkboxValue,
       })
     },

@@ -8,7 +8,7 @@ interface Props {
 }
 
 export const Logo = (props: Props) => {
-  const { loading: loadingFromProps, priority: priorityFromProps, className } = props
+  const { className, loading: loadingFromProps, priority: priorityFromProps } = props
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'

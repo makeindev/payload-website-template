@@ -1,9 +1,9 @@
 'use client'
 
-import React, { Fragment, useCallback, useState } from 'react'
-import { toast } from '@payloadcms/ui'
-
 import './index.scss'
+
+import { toast } from '@payloadcms/ui'
+import React, { Fragment, useCallback, useState } from 'react'
 
 const SuccessMessage: React.FC = () => (
   <div>
@@ -42,7 +42,7 @@ export const SeedButton: React.FC = () => {
         toast.promise(
           new Promise((resolve, reject) => {
             try {
-              fetch('/next/seed', { method: 'POST', credentials: 'include' })
+              fetch('/next/seed', { credentials: 'include', method: 'POST' })
                 .then((res) => {
                   if (res.ok) {
                     resolve(true)
@@ -59,9 +59,9 @@ export const SeedButton: React.FC = () => {
             }
           }),
           {
+            error: 'An error occurred while seeding.',
             loading: 'Seeding with data....',
             success: <SuccessMessage />,
-            error: 'An error occurred while seeding.',
           },
         )
       } catch (err) {

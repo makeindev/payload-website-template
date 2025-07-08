@@ -1,5 +1,10 @@
-import type { CollectionConfig } from 'payload'
-
+import {
+  MetaDescriptionField,
+  MetaImageField,
+  MetaTitleField,
+  OverviewField,
+  PreviewField,
+} from '@payloadcms/plugin-seo/fields'
 import {
   BlocksFeature,
   FixedToolbarFeature,
@@ -8,6 +13,9 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
+import type { CollectionConfig } from 'payload'
+
+import { slugField } from '@/fields/slug'
 
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
@@ -17,15 +25,6 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
-
-import {
-  MetaDescriptionField,
-  MetaImageField,
-  MetaTitleField,
-  OverviewField,
-  PreviewField,
-} from '@payloadcms/plugin-seo/fields'
-import { slugField } from '@/fields/slug'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',
@@ -39,13 +38,13 @@ export const Posts: CollectionConfig<'posts'> = {
   // https://payloadcms.com/docs/queries/select#defaultpopulate-collection-config-property
   // Type safe if the collection slug generic is passed to `CollectionConfig` - `CollectionConfig<'posts'>
   defaultPopulate: {
-    title: true,
     slug: true,
     categories: true,
     meta: {
-      image: true,
       description: true,
+      image: true,
     },
+    title: true,
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
@@ -71,22 +70,19 @@ export const Posts: CollectionConfig<'posts'> = {
   fields: [
     {
       name: 'title',
-      type: 'text',
       required: true,
+      type: 'text',
     },
     {
-      type: 'tabs',
       tabs: [
         {
           fields: [
             {
               name: 'heroImage',
-              type: 'upload',
               relationTo: 'media',
+              type: 'upload',
             },
             {
-              name: 'content',
-              type: 'richText',
               editor: lexicalEditor({
                 features: ({ rootFeatures }) => {
                   return [
@@ -100,7 +96,9 @@ export const Posts: CollectionConfig<'posts'> = {
                 },
               }),
               label: false,
+              name: 'content',
               required: true,
+              type: 'richText',
             },
           ],
           label: 'Content',
@@ -108,8 +106,6 @@ export const Posts: CollectionConfig<'posts'> = {
         {
           fields: [
             {
-              name: 'relatedPosts',
-              type: 'relationship',
               admin: {
                 position: 'sidebar',
               },
@@ -121,28 +117,28 @@ export const Posts: CollectionConfig<'posts'> = {
                 }
               },
               hasMany: true,
+              name: 'relatedPosts',
               relationTo: 'posts',
+              type: 'relationship',
             },
             {
-              name: 'categories',
-              type: 'relationship',
               admin: {
                 position: 'sidebar',
               },
               hasMany: true,
+              name: 'categories',
               relationTo: 'categories',
+              type: 'relationship',
             },
           ],
           label: 'Meta',
         },
         {
-          name: 'meta',
-          label: 'SEO',
           fields: [
             OverviewField({
-              titlePath: 'meta.title',
               descriptionPath: 'meta.description',
               imagePath: 'meta.image',
+              titlePath: 'meta.title',
             }),
             MetaTitleField({
               hasGenerateFn: true,
@@ -153,20 +149,21 @@ export const Posts: CollectionConfig<'posts'> = {
 
             MetaDescriptionField({}),
             PreviewField({
+              descriptionPath: 'meta.description',
               // if the `generateUrl` function is configured
               hasGenerateFn: true,
 
               // field paths to match the target field for data
               titlePath: 'meta.title',
-              descriptionPath: 'meta.description',
             }),
           ],
+          label: 'SEO',
+          name: 'meta',
         },
       ],
+      type: 'tabs',
     },
     {
-      name: 'publishedAt',
-      type: 'date',
       admin: {
         date: {
           pickerAppearance: 'dayAndTime',
@@ -183,22 +180,22 @@ export const Posts: CollectionConfig<'posts'> = {
           },
         ],
       },
+      name: 'publishedAt',
+      type: 'date',
     },
     {
-      name: 'authors',
-      type: 'relationship',
       admin: {
         position: 'sidebar',
       },
       hasMany: true,
+      name: 'authors',
       relationTo: 'users',
+      type: 'relationship',
     },
     // This field is only used to populate the user data via the `populateAuthors` hook
     // This is because the `user` collection has access control locked to protect user privacy
     // GraphQL will also not return mutated user data that differs from the underlying schema
     {
-      name: 'populatedAuthors',
-      type: 'array',
       access: {
         update: () => false,
       },
@@ -216,13 +213,15 @@ export const Posts: CollectionConfig<'posts'> = {
           type: 'text',
         },
       ],
+      name: 'populatedAuthors',
+      type: 'array',
     },
     ...slugField(),
   ],
   hooks: {
     afterChange: [revalidatePost],
-    afterRead: [populateAuthors],
     afterDelete: [revalidateDelete],
+    afterRead: [populateAuthors],
   },
   versions: {
     drafts: {

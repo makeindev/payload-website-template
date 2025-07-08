@@ -1,22 +1,22 @@
 import { BeforeSync, DocToSync } from '@payloadcms/plugin-search/types'
 
-export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searchDoc }) => {
+export const beforeSyncWithSearch: BeforeSync = async ({ originalDoc, req, searchDoc }) => {
   const {
     doc: { relationTo: collection },
   } = searchDoc
 
-  const { slug, id, categories, title, meta } = originalDoc
+  const { slug, categories, id, meta, title } = originalDoc
 
   const modifiedDoc: DocToSync = {
     ...searchDoc,
     slug,
+    categories: [],
     meta: {
       ...meta,
-      title: meta?.title || title,
-      image: meta?.image?.id || meta?.image,
       description: meta?.description,
+      image: meta?.image?.id || meta?.image,
+      title: meta?.title || title,
     },
-    categories: [],
   }
 
   if (categories && Array.isArray(categories) && categories.length > 0) {
@@ -33,11 +33,11 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
 
       const doc = await req.payload.findByID({
         collection: 'categories',
-        id: category,
-        disableErrors: true,
         depth: 0,
-        select: { title: true },
+        disableErrors: true,
+        id: category,
         req,
+        select: { title: true },
       })
 
       if (doc !== null) {
@@ -50,8 +50,8 @@ export const beforeSyncWithSearch: BeforeSync = async ({ req, originalDoc, searc
     }
 
     modifiedDoc.categories = populatedCategories.map((each) => ({
-      relationTo: 'categories',
       categoryID: String(each.id),
+      relationTo: 'categories',
       title: each.title,
     }))
   }

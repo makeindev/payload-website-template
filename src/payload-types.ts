@@ -374,6 +374,15 @@ export interface Category {
 export interface User {
   id: number;
   name?: string | null;
+  role: 'admin' | 'user';
+  /**
+   * Has the user verified their email address
+   */
+  emailVerified?: boolean | null;
+  emailVerificationToken?: string | null;
+  emailVerificationExpires?: string | null;
+  passwordResetToken?: string | null;
+  passwordResetExpires?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1274,6 +1283,12 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  role?: T;
+  emailVerified?: T;
+  emailVerificationToken?: T;
+  emailVerificationExpires?: T;
+  passwordResetToken?: T;
+  passwordResetExpires?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;

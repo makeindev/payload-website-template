@@ -1,13 +1,12 @@
-import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
-
 import { revalidatePath, revalidateTag } from 'next/cache'
+import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from 'payload'
 
 import type { Post } from '../../../payload-types'
 
 export const revalidatePost: CollectionAfterChangeHook<Post> = ({
   doc,
   previousDoc,
-  req: { payload, context },
+  req: { context, payload },
 }) => {
   if (!context.disableRevalidate) {
     if (doc._status === 'published') {

@@ -1,5 +1,6 @@
-import type { Form } from '@/payload-types'
 import { RequiredDataFromCollectionSlug } from 'payload'
+
+import type { Form } from '@/payload-types'
 
 type ContactArgs = {
   contactForm: Form
@@ -21,18 +22,16 @@ export const contact: (args: ContactArgs) => RequiredDataFromCollectionSlug<'pag
         form: contactForm,
         introContent: {
           root: {
-            type: 'root',
             children: [
               {
-                type: 'heading',
                 children: [
                   {
-                    type: 'text',
                     detail: 0,
                     format: 0,
                     mode: 'normal',
                     style: '',
                     text: 'Example contact form:',
+                    type: 'text',
                     version: 1,
                   },
                 ],
@@ -40,12 +39,14 @@ export const contact: (args: ContactArgs) => RequiredDataFromCollectionSlug<'pag
                 format: '',
                 indent: 0,
                 tag: 'h3',
+                type: 'heading',
                 version: 1,
               },
             ],
             direction: 'ltr',
             format: '',
             indent: 0,
+            type: 'root',
             version: 1,
           },
         },

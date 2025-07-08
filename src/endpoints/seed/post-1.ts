@@ -1,5 +1,6 @@
-import type { Media, User } from '@/payload-types'
 import { RequiredDataFromCollectionSlug } from 'payload'
+
+import type { Media, User } from '@/payload-types'
 
 export type PostArgs = {
   heroImage: Media
@@ -8,9 +9,9 @@ export type PostArgs = {
 }
 
 export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> = ({
-  heroImage,
-  blockImage,
   author,
+  blockImage,
+  heroImage,
 }) => {
   return {
     slug: 'digital-horizons',
@@ -18,18 +19,16 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
     authors: [author],
     content: {
       root: {
-        type: 'root',
         children: [
           {
-            type: 'heading',
             children: [
               {
-                type: 'text',
                 detail: 0,
                 format: 0,
                 mode: 'normal',
                 style: '',
                 text: 'Dive into the marvels of modern innovation, where the only constant is change. A journey where pixels and data converge to craft the future.',
+                type: 'text',
                 version: 1,
               },
             ],
@@ -37,68 +36,66 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
             format: '',
             indent: 0,
             tag: 'h2',
+            type: 'heading',
             version: 1,
           },
           {
-            type: 'block',
             fields: {
               blockName: 'Disclaimer',
               blockType: 'banner',
               content: {
                 root: {
-                  type: 'root',
                   children: [
                     {
-                      type: 'paragraph',
                       children: [
                         {
-                          type: 'text',
                           detail: 0,
                           format: 1,
                           mode: 'normal',
                           style: '',
                           text: 'Disclaimer:',
+                          type: 'text',
                           version: 1,
                         },
                         {
-                          type: 'text',
                           detail: 0,
                           format: 0,
                           mode: 'normal',
                           style: '',
                           text: ' This content is fabricated and for demonstration purposes only. To edit this post, ',
+                          type: 'text',
                           version: 1,
                         },
                         {
-                          type: 'link',
-                          children: [
-                            {
-                              type: 'text',
-                              detail: 0,
-                              format: 0,
-                              mode: 'normal',
-                              style: '',
-                              text: 'navigate to the admin dashboard',
-                              version: 1,
-                            },
-                          ],
-                          direction: 'ltr',
                           fields: {
                             linkType: 'custom',
                             newTab: true,
                             url: '/admin',
                           },
+                          children: [
+                            {
+                              detail: 0,
+                              format: 0,
+                              mode: 'normal',
+                              style: '',
+                              text: 'navigate to the admin dashboard',
+                              type: 'text',
+                              version: 1,
+                            },
+                          ],
+                          direction: 'ltr',
                           format: '',
                           indent: 0,
+                          type: 'link',
                           version: 3,
                         },
                         {
-                          type: 'text',
                           detail: 0,
                           format: 0,
                           mode: 'normal',
                           style: '',
                           text: '.',
+                          type: 'text',
                           version: 1,
                         },
                       ],
@@ -106,30 +103,32 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
                       format: '',
                       indent: 0,
                       textFormat: 0,
+                      type: 'paragraph',
                       version: 1,
                     },
                   ],
                   direction: 'ltr',
                   format: '',
                   indent: 0,
+                  type: 'root',
                   version: 1,
                 },
               },
               style: 'info',
             },
             format: '',
+            type: 'block',
             version: 2,
           },
           {
-            type: 'heading',
             children: [
               {
-                type: 'text',
                 detail: 0,
                 format: 0,
                 mode: 'normal',
                 style: '',
                 text: 'The Rise of AI and Machine Learning',
+                type: 'text',
                 version: 1,
               },
             ],
@@ -137,18 +136,18 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
             format: '',
             indent: 0,
             tag: 'h2',
+            type: 'heading',
             version: 1,
           },
           {
-            type: 'paragraph',
             children: [
               {
-                type: 'text',
                 detail: 0,
                 format: 0,
                 mode: 'normal',
                 style: '',
                 text: 'We find ourselves in a transformative era where artificial intelligence (AI) stands at the forefront of technological evolution. The ripple effects of its advancements are reshaping industries at an unprecedented pace. No longer are businesses bound by the limitations of tedious, manual processes. Instead, sophisticated machines, fueled by vast amounts of historical data, are now capable of making decisions previously left to human intuition. These intelligent systems are not only optimizing operations but also pioneering innovative approaches, heralding a new age of business transformation worldwide. ',
+                type: 'text',
                 version: 1,
               },
             ],
@@ -156,18 +155,18 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
             format: '',
             indent: 0,
             textFormat: 0,
+            type: 'paragraph',
             version: 1,
           },
           {
-            type: 'heading',
             children: [
               {
-                type: 'text',
                 detail: 0,
                 format: 0,
                 mode: 'normal',
                 style: '',
                 text: 'To demonstrate basic AI functionality, here is a javascript snippet that makes a POST request to a generic AI API in order to generate text based on a prompt. ',
+                type: 'text',
                 version: 1,
               },
             ],
@@ -175,10 +174,10 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
             format: '',
             indent: 0,
             tag: 'h4',
+            type: 'heading',
             version: 1,
           },
           {
-            type: 'block',
             fields: {
               blockName: 'Generate Text',
               blockType: 'code',
@@ -186,18 +185,18 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
               language: 'javascript',
             },
             format: '',
+            type: 'block',
             version: 2,
           },
           {
-            type: 'heading',
             children: [
               {
-                type: 'text',
                 detail: 0,
                 format: 0,
                 mode: 'normal',
                 style: '',
                 text: 'IoT: Connecting the World Around Us',
+                type: 'text',
                 version: 1,
               },
             ],
@@ -205,18 +204,18 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
             format: '',
             indent: 0,
             tag: 'h2',
+            type: 'heading',
             version: 1,
           },
           {
-            type: 'paragraph',
             children: [
               {
-                type: 'text',
                 detail: 0,
                 format: 0,
                 mode: 'normal',
                 style: '',
                 text: "In today's rapidly evolving technological landscape, the Internet of Things (IoT) stands out as a revolutionary force. From transforming our residences with smart home systems to redefining transportation through connected cars, IoT's influence is palpable in nearly every facet of our daily lives.",
+                type: 'text',
                 version: 1,
               },
             ],
@@ -224,18 +223,18 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
             format: '',
             indent: 0,
             textFormat: 0,
+            type: 'paragraph',
             version: 1,
           },
           {
-            type: 'paragraph',
             children: [
               {
-                type: 'text',
                 detail: 0,
                 format: 0,
                 mode: 'normal',
                 style: '',
                 text: "This technology hinges on the seamless integration of devices and systems, allowing them to communicate and collaborate effortlessly. With each connected device, we move a step closer to a world where convenience and efficiency are embedded in the very fabric of our existence. As a result, we're transitioning into an era where our surroundings intuitively respond to our needs, heralding a smarter and more interconnected global community.",
+                type: 'text',
                 version: 1,
               },
             ],
@@ -243,37 +242,35 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
             format: '',
             indent: 0,
             textFormat: 0,
+            type: 'paragraph',
             version: 1,
           },
           {
-            type: 'block',
             fields: {
               blockName: '',
               blockType: 'mediaBlock',
               media: blockImage.id,
             },
             format: '',
+            type: 'block',
             version: 2,
           },
           {
-            type: 'block',
             fields: {
               blockName: 'Dynamic Components',
               blockType: 'banner',
               content: {
                 root: {
-                  type: 'root',
                   children: [
                     {
-                      type: 'paragraph',
                       children: [
                         {
-                          type: 'text',
                           detail: 0,
                           format: 0,
                           mode: 'normal',
                           style: '',
                           text: "This content above is completely dynamic using custom layout building blocks configured in the CMS. This can be anything you'd like from rich text and images, to highly designed, complex components.",
+                          type: 'text',
                           version: 1,
                         },
                       ],
@@ -281,24 +278,28 @@ export const post1: (args: PostArgs) => RequiredDataFromCollectionSlug<'posts'> 
                       format: '',
                       indent: 0,
                       textFormat: 0,
+                      type: 'paragraph',
                       version: 1,
                     },
                   ],
                   direction: 'ltr',
                   format: '',
                   indent: 0,
+                  type: 'root',
                   version: 1,
                 },
               },
               style: 'info',
             },
             format: '',
+            type: 'block',
             version: 2,
           },
         ],
         direction: 'ltr',
         format: '',
         indent: 0,
+        type: 'root',
         version: 1,
       },
     },

@@ -1,12 +1,13 @@
-import type { Metadata } from 'next/types'
-
-import { CollectionArchive } from '@/components/CollectionArchive'
 import configPromise from '@payload-config'
+import type { Metadata } from 'next/types'
 import { getPayload } from 'payload'
 import React from 'react'
-import { Search } from '@/search/Component'
-import PageClient from './page.client'
+
 import { CardPostData } from '@/components/Card'
+import { CollectionArchive } from '@/components/CollectionArchive'
+import { Search } from '@/search/Component'
+
+import PageClient from './page.client'
 
 type Args = {
   searchParams: Promise<{
@@ -21,14 +22,14 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
     collection: 'search',
     depth: 1,
     limit: 12,
+    // pagination: false reduces overhead if you don't need totalDocs
+    pagination: false,
     select: {
-      title: true,
       slug: true,
       categories: true,
       meta: true,
+      title: true,
     },
-    // pagination: false reduces overhead if you don't need totalDocs
-    pagination: false,
     ...(query
       ? {
           where: {

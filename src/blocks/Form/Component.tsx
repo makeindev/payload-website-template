@@ -1,15 +1,16 @@
 'use client'
-import type { FormFieldBlock, Form as FormType } from '@payloadcms/plugin-form-builder/types'
 
+import type { Form as FormType, FormFieldBlock } from '@payloadcms/plugin-form-builder/types'
+import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
 import { useRouter } from 'next/navigation'
 import React, { useCallback, useState } from 'react'
-import { useForm, FormProvider } from 'react-hook-form'
+import { FormProvider, useForm } from 'react-hook-form'
+
 import RichText from '@/components/RichText'
 import { Button } from '@/components/ui/button'
-import type { SerializedEditorState } from '@payloadcms/richtext-lexical/lexical'
+import { getClientSideURL } from '@/utilities/getURL'
 
 import { fields } from './fields'
-import { getClientSideURL } from '@/utilities/getURL'
 
 export type FormBlockType = {
   blockName?: string
@@ -27,7 +28,7 @@ export const FormBlock: React.FC<
   const {
     enableIntro,
     form: formFromProps,
-    form: { id: formID, confirmationMessage, confirmationType, redirect, submitButtonLabel } = {},
+    form: { confirmationMessage, confirmationType, id: formID, redirect, submitButtonLabel } = {},
     introContent,
   } = props
 

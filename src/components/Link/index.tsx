@@ -1,9 +1,9 @@
-import { Button, type ButtonProps } from '@/components/ui/button'
-import { cn } from '@/utilities/ui'
 import Link from 'next/link'
 import React from 'react'
 
+import { Button, type ButtonProps } from '@/components/ui/button'
 import type { Page, Post } from '@/payload-types'
+import { cn } from '@/utilities/ui'
 
 type CMSLinkType = {
   appearance?: 'inline' | ButtonProps['variant']
@@ -22,7 +22,6 @@ type CMSLinkType = {
 
 export const CMSLink: React.FC<CMSLinkType> = (props) => {
   const {
-    type,
     appearance = 'inline',
     children,
     className,
@@ -30,6 +29,7 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
     newTab,
     reference,
     size: sizeFromProps,
+    type,
     url,
   } = props
 

@@ -1,10 +1,8 @@
-import type { CollectionSlug, PayloadRequest } from 'payload'
-import { getPayload } from 'payload'
-
+import configPromise from '@payload-config'
 import { draftMode } from 'next/headers'
 import { redirect } from 'next/navigation'
-
-import configPromise from '@payload-config'
+import type { CollectionSlug, PayloadRequest } from 'payload'
+import { getPayload } from 'payload'
 
 export async function GET(
   req: {
@@ -40,8 +38,8 @@ export async function GET(
 
   try {
     user = await payload.auth({
-      req: req as unknown as PayloadRequest,
       headers: req.headers,
+      req: req as unknown as PayloadRequest,
     })
   } catch (error) {
     payload.logger.error({ err: error }, 'Error verifying token for live preview')

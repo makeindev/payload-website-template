@@ -1,6 +1,7 @@
 import type { GlobalConfig } from 'payload'
 
 import { link } from '@/fields/link'
+
 import { revalidateFooter } from './hooks/revalidateFooter'
 
 export const Footer: GlobalConfig = {
@@ -10,20 +11,20 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
-      name: 'navItems',
-      type: 'array',
+      admin: {
+        components: {
+          RowLabel: '@/Footer/RowLabel#RowLabel',
+        },
+        initCollapsed: true,
+      },
       fields: [
         link({
           appearances: false,
         }),
       ],
       maxRows: 6,
-      admin: {
-        initCollapsed: true,
-        components: {
-          RowLabel: '@/Footer/RowLabel#RowLabel',
-        },
-      },
+      name: 'navItems',
+      type: 'array',
     },
   ],
   hooks: {
