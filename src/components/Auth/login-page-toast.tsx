@@ -8,7 +8,7 @@ interface LoginPageToastProps {
   error?: string
 }
 
-export function LoginPageToast({ success, error }: LoginPageToastProps) {
+export function LoginPageToast({ error, success }: LoginPageToastProps) {
   useEffect(() => {
     if (success) {
       switch (success) {

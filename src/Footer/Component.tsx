@@ -1,6 +1,8 @@
 import Link from 'next/link'
 import Balancer from 'react-wrap-balancer'
-import { Section, Container } from '@/components/ds'
+
+import { Container, Section } from '@/components/ds'
+import { Logo } from '@/components/Logo/Logo'
 import { CMSLink } from '@/components/Link'
 import { ThemeToggle } from '@/components/theme/theme-toggle'
 import type { Footer as FooterType } from '@/payload-types'
@@ -13,17 +15,25 @@ export async function Footer() {
   return (
     <footer className="border-t bg-accent/30 mt-auto">
       <Section>
-        <Container className="grid gap-6 grid-cols-1 md:grid-cols-[1fr_auto] items-center py-8">
-          <div className="grid gap-6">
-            <Link href="/" className="flex items-center space-x-3 text-lg">
-              <span className="font-bold">Payload SaaS Starter</span>
+        <Container className="grid gap-2 grid-cols-1 md:grid-cols-[1fr_auto]">
+          <div className="grid gap-2">
+            <Link href="/" className="space-y-6 text-lg">
+              <span className="flex items-center">
+                <Logo
+                  size="medium"
+                  loading="eager"
+                  priority="high"
+                  className="invert dark:invert-0"
+                />
+                <span className="font-bold">Website Template</span>
+              </span>
             </Link>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground px-3">
               <Balancer>
                 A Modern, Open-Source Website Starter — Built with Next.js & Payload CMS
               </Balancer>
             </p>
-            <nav className="flex flex-col gap-2 text-sm text-muted-foreground underline underline-offset-4 md:flex-row md:gap-4">
+            <nav className="flex flex-col gap-2 px-3 text-sm text-muted-foreground underline underline-offset-4 md:flex-row md:gap-4">
               {navItems.length > 0 ? (
                 navItems.map(({ link }, i) => (
                   <CMSLink className="hover:text-primary" key={i} {...link} />
@@ -36,17 +46,15 @@ export async function Footer() {
                 </>
               )}
             </nav>
-            <p className="text-muted-foreground text-xs">
+            <p className="text-muted-foreground text-xs  px-3">
               ©{' '}
               <a href="https://github.com/makeindev" className="hover:underline">
                 MakeinDev
               </a>
-              . All rights reserved. 2025-present.
+              . All rights reserved. 2025 - Present.
             </p>
           </div>
-          <div className="flex justify-end w-full md:w-auto">
-            <ThemeToggle />
-          </div>
+          <ThemeToggle />
         </Container>
       </Section>
     </footer>

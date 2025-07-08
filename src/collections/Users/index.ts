@@ -22,50 +22,50 @@ export const Users: CollectionConfig = {
       type: 'text',
     },
     {
+      defaultValue: 'user',
       name: 'role',
-      type: 'select',
       options: [
         { label: 'Admin', value: 'admin' },
         { label: 'User', value: 'user' },
       ],
       required: true,
-      defaultValue: 'user',
+      type: 'select',
     },
     {
-      name: 'emailVerified',
-      type: 'checkbox',
-      defaultValue: false,
       admin: {
         description: 'Has the user verified their email address',
       },
+      defaultValue: false,
+      name: 'emailVerified',
+      type: 'checkbox',
     },
     {
+      admin: {
+        hidden: true,
+      },
       name: 'emailVerificationToken',
       type: 'text',
+    },
+    {
       admin: {
         hidden: true,
       },
-    },
-    {
       name: 'emailVerificationExpires',
       type: 'date',
+    },
+    {
       admin: {
         hidden: true,
       },
-    },
-    {
       name: 'passwordResetToken',
       type: 'text',
-      admin: {
-        hidden: true,
-      },
     },
     {
-      name: 'passwordResetExpires',
-      type: 'date',
       admin: {
         hidden: true,
       },
+      name: 'passwordResetExpires',
+      type: 'date',
     },
   ],
   timestamps: true,

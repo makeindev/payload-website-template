@@ -1,14 +1,14 @@
 'use client'
 
-import { SubmitButton } from './submit-button'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
-import { registerUser } from '@/lib/auth'
-import { validatePassword, validateEmail } from '@/lib/validation'
-import { useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
-
 import type { RegisterResponse } from '@/lib/auth'
+import { registerUser } from '@/lib/auth'
+import { validateEmail, validatePassword } from '@/lib/validation'
+
+import { SubmitButton } from './submit-button'
 
 export const RegisterForm = () => {
   const [isPending, setIsPending] = useState(false)
@@ -80,7 +80,8 @@ export const RegisterForm = () => {
       switch (res.errorCode) {
         case 'EMAIL_EXISTS':
           toast.error('Email Already Exists', {
-            description: 'An account with this email already exists. Please log in or use a different email.',
+            description:
+              'An account with this email already exists. Please log in or use a different email.',
           })
           break
         case 'VALIDATION_ERROR':
@@ -90,7 +91,7 @@ export const RegisterForm = () => {
           break
         case 'REGISTRATION_FAILED':
           toast.error('Registration Failed', {
-            description: 'We couldn\'t create your account. Please try again.',
+            description: "We couldn't create your account. Please try again.",
           })
           break
         default:

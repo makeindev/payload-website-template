@@ -13,24 +13,24 @@ export interface EmailOptions {
   html: string
 }
 
-export async function sendEmail({ to, subject, html }: EmailOptions) {
+export async function sendEmail({ html, subject, to }: EmailOptions) {
   if (!resend) {
     console.warn('Resend API key not configured, skipping email send')
-    return { success: false, error: 'Email service not configured' }
+    return { error: 'Email service not configured', success: false }
   }
 
   try {
     const data = await resend.emails.send({
       from: emailFrom,
-      to,
-      subject,
       html,
+      subject,
+      to,
     })
 
-    return { success: true, data }
+    return { data, success: true }
   } catch (error) {
     console.error('Failed to send email:', error)
-    return { success: false, error }
+    return { error, success: false }
   }
 }
 
@@ -38,7 +38,7 @@ export async function sendEmail({ to, subject, html }: EmailOptions) {
 
 export function verificationEmailTemplate(email: string, token: string): string {
   const verificationUrl = `${appUrl}/api/auth/verify-email?token=${token}&email=${encodeURIComponent(email)}`
-  
+
   return `
     <!DOCTYPE html>
     <html>
@@ -104,7 +104,7 @@ export function verificationEmailTemplate(email: string, token: string): string 
 
 export function passwordResetEmailTemplate(email: string, token: string): string {
   const resetUrl = `${appUrl}/reset-password?token=${token}&email=${encodeURIComponent(email)}`
-  
+
   return `
     <!DOCTYPE html>
     <html>

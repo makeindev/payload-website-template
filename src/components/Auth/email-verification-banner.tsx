@@ -1,10 +1,11 @@
 'use client'
 
+import { AlertCircle, Mail } from 'lucide-react'
 import { useState } from 'react'
-import { resendVerification } from '@/lib/auth'
-import { Button } from '@/components/ui/button'
-import { Mail, AlertCircle } from 'lucide-react'
 import { toast } from 'sonner'
+
+import { Button } from '@/components/ui/button'
+import { resendVerification } from '@/lib/auth'
 
 interface EmailVerificationBannerProps {
   userEmail: string
@@ -15,10 +16,10 @@ export const EmailVerificationBanner = ({ userEmail }: EmailVerificationBannerPr
 
   const handleResendVerification = async () => {
     setIsResending(true)
-    
+
     try {
       const result = await resendVerification(userEmail)
-      
+
       if (result.success) {
         toast.success('Verification Email Sent!', {
           description: 'Please check your inbox for the verification link.',
@@ -43,7 +44,10 @@ export const EmailVerificationBanner = ({ userEmail }: EmailVerificationBannerPr
         <div className="flex flex-wrap items-center justify-between">
           <div className="flex items-center">
             <span className="flex rounded-lg bg-yellow-100 p-2 dark:bg-yellow-900/50">
-              <AlertCircle className="h-5 w-5 text-yellow-600 dark:text-yellow-400" aria-hidden="true" />
+              <AlertCircle
+                className="h-5 w-5 text-yellow-600 dark:text-yellow-400"
+                aria-hidden="true"
+              />
             </span>
             <div className="ml-3">
               <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">

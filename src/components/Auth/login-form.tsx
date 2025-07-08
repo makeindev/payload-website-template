@@ -1,14 +1,13 @@
 'use client'
 
-import { SubmitButton } from '@/components/auth/submit-button'
 import Link from 'next/link'
-import { toast } from 'sonner'
-
-import { loginUser } from '@/lib/auth'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import { toast } from 'sonner'
 
+import { SubmitButton } from '@/components/auth/submit-button'
 import type { LoginResponse } from '@/lib/auth'
+import { loginUser } from '@/lib/auth'
 
 export const LoginForm = () => {
   const [isPending, setIsPending] = useState(false)

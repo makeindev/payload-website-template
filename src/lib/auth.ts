@@ -1,15 +1,22 @@
 'use server'
 
-import { cookies, headers as getHeaders } from 'next/headers'
-import { getPayload } from 'payload'
-import type { Payload } from 'payload'
 import config from '@payload-config'
 import configPromise from '@payload-config'
-import { redirect } from 'next/navigation'
-import type { User } from '@/payload-types'
-import { validateEmail, validatePassword } from './validation'
-import { sendEmail, verificationEmailTemplate, passwordResetEmailTemplate, passwordChangedEmailTemplate } from './email'
 import { randomBytes } from 'crypto'
+import { cookies, headers as getHeaders } from 'next/headers'
+import { redirect } from 'next/navigation'
+import type { Payload } from 'payload'
+import { getPayload } from 'payload'
+
+import type { User } from '@/payload-types'
+
+import {
+  passwordChangedEmailTemplate,
+  passwordResetEmailTemplate,
+  sendEmail,
+  verificationEmailTemplate,
+} from './email'
+import { validateEmail, validatePassword } from './validation'
 
 // Auth Types
 
@@ -54,8 +61,6 @@ export type ResetPasswordResponse = {
   errorCode?: string
 }
 
-
-
 // Auth Actions
 
 /**
@@ -80,15 +85,19 @@ export async function getUser(): Promise<User | null> {
  * @param params Login parameters including email, password and optional rememberMe flag
  * @returns Login response with success status and error message if applicable
  */
-export async function loginUser({ email, password, rememberMe = false }: LoginParams): Promise<LoginResponse> {
+export async function loginUser({
+  email,
+  password,
+  rememberMe = false,
+}: LoginParams): Promise<LoginResponse> {
   // Validate inputs first
   const emailValidation = validateEmail(email)
   if (!emailValidation.valid) {
-    return { success: false, error: emailValidation.error, errorCode: 'INVALID_EMAIL' }
+    return { error: emailValidation.error, errorCode: 'INVALID_EMAIL', success: false }
   }
 
   if (!password) {
-    return { success: false, error: 'Password is required', errorCode: 'MISSING_PASSWORD' }
+    return { error: 'Password is required', errorCode: 'MISSING_PASSWORD', success: false }
   }
 
   try {
@@ -103,53 +112,53 @@ export async function loginUser({ email, password, rememberMe = false }: LoginPa
 
       if (result.token) {
         const cookieStore = await cookies()
-        
+
         // Calculate expiration date based on rememberMe flag
         const expiresIn = rememberMe ? 30 * 24 * 60 * 60 * 1000 : 24 * 60 * 60 * 1000 // 30 days or 1 day in milliseconds
         const expiresDate = new Date(Date.now() + expiresIn)
-        
+
         cookieStore.set('payload-token', result.token, {
+          expires: expiresDate,
           httpOnly: true,
-          secure: process.env.NODE_ENV === 'production',
-          sameSite: 'strict',
           path: '/',
-          expires: expiresDate
+          sameSite: 'strict',
+          secure: process.env.NODE_ENV === 'production',
         })
 
         return { success: true }
       }
 
-      return { 
-        success: false, 
-        error: 'Invalid email or password', 
-        errorCode: 'INVALID_CREDENTIALS' 
+      return {
+        error: 'Invalid email or password',
+        errorCode: 'INVALID_CREDENTIALS',
+        success: false,
       }
     } catch (error) {
       console.error('Login attempt failed:', error)
-      
+
       // Provide more specific error messages based on error type
       if (error instanceof Error) {
         if (error.message.includes('credentials')) {
-          return { 
-            success: false, 
-            error: 'The email or password you entered is incorrect', 
-            errorCode: 'INVALID_CREDENTIALS' 
+          return {
+            error: 'The email or password you entered is incorrect',
+            errorCode: 'INVALID_CREDENTIALS',
+            success: false,
           }
         }
       }
-      
-      return { 
-        success: false, 
-        error: 'Authentication failed. Please try again later.', 
-        errorCode: 'AUTH_ERROR' 
+
+      return {
+        error: 'Authentication failed. Please try again later.',
+        errorCode: 'AUTH_ERROR',
+        success: false,
       }
     }
   } catch (error) {
     console.error('Login system error:', error)
-    return { 
-      success: false, 
-      error: 'We encountered a system error. Please try again later.', 
-      errorCode: 'SYSTEM_ERROR' 
+    return {
+      error: 'We encountered a system error. Please try again later.',
+      errorCode: 'SYSTEM_ERROR',
+      success: false,
     }
   }
 }
@@ -162,10 +171,10 @@ export async function logoutUser() {
     const cookieStore = await cookies()
     // Delete the auth cookie with proper options
     cookieStore.delete('payload-token')
-    
+
     // Clear any other auth-related cookies if they exist
     cookieStore.delete('user-session')
-    
+
     redirect('/')
   } catch (error) {
     console.error('Logout error:', error)
@@ -181,10 +190,10 @@ export async function clearAuthCookies(): Promise<{ success: boolean }> {
     const cookieStore = await cookies()
     // Delete the auth cookie with proper options
     cookieStore.delete('payload-token')
-    
+
     // Clear any other auth-related cookies if they exist
     cookieStore.delete('user-session')
-    
+
     return { success: true }
   } catch (error) {
     console.error('Clear cookies error:', error)
@@ -201,13 +210,13 @@ export async function registerUser({ email, password }: RegisterParams): Promise
   // Validate email
   const emailValidation = validateEmail(email)
   if (!emailValidation.valid) {
-    return { success: false, error: emailValidation.error, errorCode: 'INVALID_EMAIL' }
+    return { error: emailValidation.error, errorCode: 'INVALID_EMAIL', success: false }
   }
 
   // Validate password
   const passwordValidation = validatePassword(password)
   if (!passwordValidation.valid) {
-    return { success: false, error: passwordValidation.error, errorCode: 'INVALID_PASSWORD' }
+    return { error: passwordValidation.error, errorCode: 'INVALID_PASSWORD', success: false }
   }
 
   try {
@@ -223,19 +232,19 @@ export async function registerUser({ email, password }: RegisterParams): Promise
         collection: 'users',
         data: {
           email,
+          emailVerificationExpires: verificationExpires.toISOString(),
+          emailVerificationToken: verificationToken,
+          emailVerified: false,
           password,
           role: 'user',
-          emailVerified: false,
-          emailVerificationToken: verificationToken,
-          emailVerificationExpires: verificationExpires.toISOString(),
         },
       })
 
       // Send verification email
       await sendEmail({
-        to: email,
-        subject: 'Verify your email address',
         html: verificationEmailTemplate(email, verificationToken),
+        subject: 'Verify your email address',
+        to: email,
       })
 
       // Log the user in (they can use the app but with limited access until verified)
@@ -244,46 +253,48 @@ export async function registerUser({ email, password }: RegisterParams): Promise
       if (loginResponse.success) {
         return { success: true }
       }
-      
-      return { 
-        success: false, 
-        error: 'Account created but unable to log in automatically. Please try logging in manually.', 
-        errorCode: 'LOGIN_AFTER_REGISTER_FAILED' 
+
+      return {
+        error:
+          'Account created but unable to log in automatically. Please try logging in manually.',
+        errorCode: 'LOGIN_AFTER_REGISTER_FAILED',
+        success: false,
       }
     } catch (error) {
       console.error('Registration attempt failed:', error)
-      
+
       // Provide specific error messages based on error type
       if (error instanceof Error) {
         if (error.message.includes('duplicate key error')) {
-          return { 
-            success: false, 
-            error: 'An account with this email already exists. Please log in or use a different email.', 
-            errorCode: 'EMAIL_EXISTS' 
+          return {
+            error:
+              'An account with this email already exists. Please log in or use a different email.',
+            errorCode: 'EMAIL_EXISTS',
+            success: false,
           }
         }
-        
+
         if (error.message.includes('validation')) {
-          return { 
-            success: false, 
-            error: 'Please check your information and try again.', 
-            errorCode: 'VALIDATION_ERROR' 
+          return {
+            error: 'Please check your information and try again.',
+            errorCode: 'VALIDATION_ERROR',
+            success: false,
           }
         }
       }
-      
-      return { 
-        success: false, 
-        error: 'We couldn\'t create your account. Please try again later.', 
-        errorCode: 'REGISTRATION_FAILED' 
+
+      return {
+        error: "We couldn't create your account. Please try again later.",
+        errorCode: 'REGISTRATION_FAILED',
+        success: false,
       }
     }
   } catch (error) {
     console.error('Registration system error:', error)
-    return { 
-      success: false, 
-      error: 'We encountered a system error. Please try again later.', 
-      errorCode: 'SYSTEM_ERROR' 
+    return {
+      error: 'We encountered a system error. Please try again later.',
+      errorCode: 'SYSTEM_ERROR',
+      success: false,
     }
   }
 }
@@ -297,7 +308,7 @@ export async function forgotPassword(email: string): Promise<ForgotPasswordRespo
   // Validate email
   const emailValidation = validateEmail(email)
   if (!emailValidation.valid) {
-    return { success: false, error: emailValidation.error, errorCode: 'INVALID_EMAIL' }
+    return { error: emailValidation.error, errorCode: 'INVALID_EMAIL', success: false }
   }
 
   try {
@@ -326,27 +337,27 @@ export async function forgotPassword(email: string): Promise<ForgotPasswordRespo
     // Update user with reset token
     await payload.update({
       collection: 'users',
-      id: user.id,
       data: {
-        passwordResetToken: resetToken,
         passwordResetExpires: resetExpires.toISOString(),
+        passwordResetToken: resetToken,
       },
+      id: user.id,
     })
 
     // Send reset email
     await sendEmail({
-      to: email,
-      subject: 'Reset your password',
       html: passwordResetEmailTemplate(email, resetToken),
+      subject: 'Reset your password',
+      to: email,
     })
 
     return { success: true }
   } catch (error) {
     console.error('Forgot password error:', error)
     return {
-      success: false,
       error: 'We encountered an error. Please try again later.',
       errorCode: 'SYSTEM_ERROR',
+      success: false,
     }
   }
 }
@@ -361,21 +372,21 @@ export async function forgotPassword(email: string): Promise<ForgotPasswordRespo
 export async function resetPassword(
   token: string,
   email: string,
-  newPassword: string
+  newPassword: string,
 ): Promise<ResetPasswordResponse> {
   // Validate inputs
   const emailValidation = validateEmail(email)
   if (!emailValidation.valid) {
-    return { success: false, error: emailValidation.error, errorCode: 'INVALID_EMAIL' }
+    return { error: emailValidation.error, errorCode: 'INVALID_EMAIL', success: false }
   }
 
   const passwordValidation = validatePassword(newPassword)
   if (!passwordValidation.valid) {
-    return { success: false, error: passwordValidation.error, errorCode: 'INVALID_PASSWORD' }
+    return { error: passwordValidation.error, errorCode: 'INVALID_PASSWORD', success: false }
   }
 
   if (!token) {
-    return { success: false, error: 'Invalid reset token', errorCode: 'INVALID_TOKEN' }
+    return { error: 'Invalid reset token', errorCode: 'INVALID_TOKEN', success: false }
   }
 
   try {
@@ -395,9 +406,9 @@ export async function resetPassword(
 
     if (users.docs.length === 0) {
       return {
-        success: false,
         error: 'Invalid or expired reset token',
         errorCode: 'INVALID_OR_EXPIRED_TOKEN',
+        success: false,
       }
     }
 
@@ -406,28 +417,28 @@ export async function resetPassword(
     // Update password and clear reset token
     await payload.update({
       collection: 'users',
-      id: user.id,
       data: {
         password: newPassword,
-        passwordResetToken: null,
         passwordResetExpires: null,
+        passwordResetToken: null,
       },
+      id: user.id,
     })
 
     // Send confirmation email
     await sendEmail({
-      to: email,
-      subject: 'Your password was changed',
       html: passwordChangedEmailTemplate(),
+      subject: 'Your password was changed',
+      to: email,
     })
 
     return { success: true }
   } catch (error) {
     console.error('Reset password error:', error)
     return {
-      success: false,
       error: 'We encountered an error. Please try again later.',
       errorCode: 'SYSTEM_ERROR',
+      success: false,
     }
   }
 }
@@ -437,10 +448,12 @@ export async function resetPassword(
  * @param email Email address to resend verification to
  * @returns Response indicating success or failure
  */
-export async function resendVerification(email: string): Promise<{ success: boolean; error?: string }> {
+export async function resendVerification(
+  email: string,
+): Promise<{ success: boolean; error?: string }> {
   const emailValidation = validateEmail(email)
   if (!emailValidation.valid) {
-    return { success: false, error: emailValidation.error }
+    return { error: emailValidation.error, success: false }
   }
 
   try {
@@ -450,10 +463,7 @@ export async function resendVerification(email: string): Promise<{ success: bool
     const users = await payload.find({
       collection: 'users',
       where: {
-        and: [
-          { email: { equals: email } },
-          { emailVerified: { equals: false } },
-        ],
+        and: [{ email: { equals: email } }, { emailVerified: { equals: false } }],
       },
     })
 
@@ -471,23 +481,23 @@ export async function resendVerification(email: string): Promise<{ success: bool
     // Update user with new token
     await payload.update({
       collection: 'users',
-      id: user.id,
       data: {
-        emailVerificationToken: verificationToken,
         emailVerificationExpires: verificationExpires.toISOString(),
+        emailVerificationToken: verificationToken,
       },
+      id: user.id,
     })
 
     // Send verification email
     await sendEmail({
-      to: email,
-      subject: 'Verify your email address',
       html: verificationEmailTemplate(email, verificationToken),
+      subject: 'Verify your email address',
+      to: email,
     })
 
     return { success: true }
   } catch (error) {
     console.error('Resend verification error:', error)
-    return { success: false, error: 'Failed to send verification email' }
+    return { error: 'Failed to send verification email', success: false }
   }
 }

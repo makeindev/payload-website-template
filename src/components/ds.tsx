@@ -41,7 +41,7 @@ type DSProps = {
  * @returns {JSX.Element} A section element.
  */
 export const Section = ({ children, className, id, style }: DSProps) => (
-  <section className={cn('py-2 sm:py-4', className)} id={id} style={style}>
+  <section className={cn('py-1 sm:py-2', className)} id={id} style={style}>
     {children}
   </section>
 )
@@ -57,7 +57,7 @@ export const Section = ({ children, className, id, style }: DSProps) => (
  * @returns {JSX.Element} A div element acting as a container.
  */
 export const Container = ({ children, className, id, style }: DSProps) => (
-  <div className={cn('max-w-5xl mx-auto p-4 sm:p-6', className)} id={id} style={style}>
+  <div className={cn('max-w-5xl mx-auto p-2 sm:p-6', className)} id={id} style={style}>
     {children}
   </div>
 )
@@ -74,7 +74,7 @@ export const Container = ({ children, className, id, style }: DSProps) => (
  * @returns {JSX.Element} A nav element with a centered inner container.
  */
 
-export const Nav = ({ children, className, id, style, containerClassName }: DSProps) => (
+export const Nav = ({ children, className, containerClassName, id, style }: DSProps) => (
   <nav className={cn(className)} id={id} style={style}>
     <div
       id="nav-container"
@@ -139,11 +139,11 @@ export const Main = ({ children, className, id, style }: DSProps) => (
 export const Prose = ({
   children,
   className,
-  id,
   dangerouslySetInnerHTML,
-  style,
+  id,
   isArticle = false,
   isSpaced = false,
+  style,
 }: DSProps) => {
   const Component = isArticle ? 'article' : 'div'
 

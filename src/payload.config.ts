@@ -22,7 +22,6 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
-    user: Users.slug,
     components: {
       // The `BeforeDashboard` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
@@ -56,6 +55,7 @@ export default buildConfig({
         },
       ],
     },
+    user: Users.slug,
   },
   collections: [Pages, Posts, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),

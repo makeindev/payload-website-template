@@ -1,8 +1,9 @@
 'use client'
 
-import { useEffect } from 'react'
 import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
 import { toast } from 'sonner'
+
 import type { User } from '@/payload-types'
 
 interface AuthRedirectProps {
@@ -11,10 +12,10 @@ interface AuthRedirectProps {
   message?: string
 }
 
-export function AuthRedirect({ 
-  user, 
-  redirectTo = '/dashboard', 
-  message = 'You are already signed in. Redirecting to dashboard...' 
+export function AuthRedirect({
+  message = 'You are already signed in. Redirecting to dashboard...',
+  redirectTo = '/dashboard',
+  user,
 }: AuthRedirectProps) {
   const router = useRouter()
 
