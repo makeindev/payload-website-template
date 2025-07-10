@@ -1,9 +1,8 @@
 import type { CollectionConfig } from 'payload'
 import { deleteLinkedAccounts } from 'payload-auth-plugin/collection/hooks'
 
-import { UserAccounts } from './Accounts'
-
 import { authenticated } from '../../../access/authenticated'
+import { UserAccounts } from './Accounts'
 
 export const Users: CollectionConfig = {
   auth: true,

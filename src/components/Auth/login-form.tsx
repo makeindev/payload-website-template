@@ -1,5 +1,6 @@
 'use client'
 
+import { Eye, EyeOff } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -8,7 +9,6 @@ import { toast } from 'sonner'
 import { SubmitButton } from '@/components/auth/submit-button'
 import type { LoginResponse } from '@/lib/auth'
 import { loginUser } from '@/lib/auth'
-import { Eye, EyeOff } from 'lucide-react'
 
 export const LoginForm = () => {
   const [isPending, setIsPending] = useState(false)

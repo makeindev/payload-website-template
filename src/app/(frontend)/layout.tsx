@@ -5,6 +5,7 @@ import { GeistSans } from 'geist/font/sans'
 import type { Metadata } from 'next'
 import { draftMode } from 'next/headers'
 import React from 'react'
+import { Toaster } from 'sonner'
 
 import { AdminBar } from '@/components/AdminBar'
 import { ThemeProvider } from '@/components/theme/theme-provider'
@@ -15,7 +16,6 @@ import { InitTheme } from '@/providers/Theme/InitTheme'
 import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { cn } from '@/utilities/ui'
-import { Toaster } from 'sonner'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()

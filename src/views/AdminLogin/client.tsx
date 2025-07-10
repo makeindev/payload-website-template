@@ -1,9 +1,9 @@
 'use client'
 
-import React from 'react'
-import { signin } from 'payload-auth-plugin/client'
-import { useRouter } from 'next/navigation'
 import { Button, toast } from '@payloadcms/ui'
+import { useRouter } from 'next/navigation'
+import { signin } from 'payload-auth-plugin/client'
+import React from 'react'
 const AdminLoginViewClient = () => {
   const { oauth } = signin({ name: 'admin' })
 

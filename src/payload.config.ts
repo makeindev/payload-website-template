@@ -5,17 +5,18 @@ import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import sharp from 'sharp' // sharp-import
 import { fileURLToPath } from 'url'
-// import { resendAdapter } from '@payloadcms/email-resend'
 
+import { Logo } from '@/components/Logo/Logo'
+// import { resendAdapter } from '@payloadcms/email-resend'
 import { defaultLexical } from '@/fields/defaultLexical'
 
+import { AdminUsers } from './collections/Auth/Admin'
+import { UserAccounts } from './collections/Auth/User/Accounts'
+import { Users } from './collections/Auth/User/Users'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
-import { AdminUsers } from './collections/Auth/Admin'
-import { Users } from './collections/Auth/User/Users'
-import { UserAccounts } from './collections/Auth/User/Accounts'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -27,24 +28,21 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     components: {
-      // afterLogin: ['@/components/AfterLogin/index#AdminLogin'],
-      // views: {
-      //   login: {
-      //     Component: '@/views/AdminLogin/index#AdminLoginView',
-      //     path: '/auth/signin',
-      //   },
-      // },
       // The `BeforeMember` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeDashboard: ['@/components/BeforeMember'],
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeLogin: ['@/components/BeforeLogin'],
+      views: {
+        login: {
+          Component: '@/views/AdminLogin/index#AdminLoginView',
+        },
+      },
     },
     importMap: {
       baseDir: path.resolve(dirname),
     },
-    user: AdminUsers.slug,
     // user: Users.slug, change uset to single user
     livePreview: {
       breakpoints: [
@@ -68,6 +66,8 @@ export default buildConfig({
         },
       ],
     },
+    suppressHydrationWarning: true,
+    user: AdminUsers.slug,
   },
   collections: [Pages, Posts, Media, Categories, Users, UserAccounts, AdminUsers],
   cors: [getServerSideURL()].filter(Boolean),
@@ -116,8 +116,8 @@ export default buildConfig({
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
     }),
   ],
-  serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
   secret: process.env.PAYLOAD_SECRET,
+  serverURL: process.env.NEXT_PUBLIC_SERVER_URL,
   sharp,
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),

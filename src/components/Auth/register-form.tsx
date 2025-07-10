@@ -1,5 +1,6 @@
 'use client'
 
+import { Eye, EyeOff } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
@@ -7,7 +8,6 @@ import { toast } from 'sonner'
 import type { RegisterResponse } from '@/lib/auth'
 import { registerUser } from '@/lib/auth'
 import { validateEmail, validatePassword } from '@/lib/validation'
-import { Eye, EyeOff } from 'lucide-react'
 
 import { SubmitButton } from './submit-button'
 

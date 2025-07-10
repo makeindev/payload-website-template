@@ -1,18 +1,13 @@
-import { redirect } from 'next/navigation'
-import { AdminViewServerProps } from 'payload'
-import React, { Fragment } from 'react'
-import AdminLoginViewClient from './client'
-export const AdminLoginView: React.FC<AdminViewServerProps> = ({
-  initPageResult,
-  params,
-  searchParams,
-}) => {
-  const {
-    req: { user },
-  } = initPageResult
-  if (!!user) {
-    redirect('/admin')
-  }
+import { Logo } from '@/components/Logo/Logo'
 
-  return <AdminLoginViewClient />
+export function AdminLoginView() {
+  return (
+    <div style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', marginTop: 40 }}>
+      <Logo size="large" />
+      {/* The default Payload login form will be rendered below this logo */}
+      <div style={{ marginTop: 32 }} />
+    </div>
+  )
 }
+
+export default AdminLoginView
