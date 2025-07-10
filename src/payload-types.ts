@@ -109,11 +109,13 @@ export interface Config {
     emailSettings: EmailSetting;
     header: Header;
     footer: Footer;
+    homepage: Homepage;
   };
   globalsSelect: {
     emailSettings: EmailSettingsSelect<false> | EmailSettingsSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    homepage: HomepageSelect<false> | HomepageSelect<true>;
   };
   locale: null;
   user:
@@ -1817,6 +1819,19 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage".
+ */
+export interface Homepage {
+  id: number;
+  /**
+   * Select the page to use as the site homepage.
+   */
+  home: number | Page;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "emailSettings_select".
  */
 export interface EmailSettingsSelect<T extends boolean = true> {
@@ -1875,6 +1890,16 @@ export interface FooterSelect<T extends boolean = true> {
             };
         id?: T;
       };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "homepage_select".
+ */
+export interface HomepageSelect<T extends boolean = true> {
+  home?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

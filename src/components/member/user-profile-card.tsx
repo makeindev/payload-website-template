@@ -1,6 +1,8 @@
 'use client'
 
 import { CheckCircle, Edit, Settings, User, XCircle } from 'lucide-react'
+import React, { useState } from 'react'
+import { toast } from 'sonner'
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -8,8 +10,6 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import type { User as UserType } from '@/payload-types'
-import React, { useState } from 'react'
-import { toast } from 'sonner'
 
 interface UserProfileCardProps {
   user: UserType
@@ -17,7 +17,7 @@ interface UserProfileCardProps {
   setUser?: (user: UserType) => void
 }
 
-export function UserProfileCard({ accountAgeDays, user, setUser }: UserProfileCardProps) {
+export function UserProfileCard({ accountAgeDays, setUser, user }: UserProfileCardProps) {
   // Generate initials from email
   const getInitials = (email: string) => {
     const parts = email.split('@')[0].split('.')
@@ -43,12 +43,12 @@ export function UserProfileCard({ accountAgeDays, user, setUser }: UserProfileCa
     setEditLoading(true)
     try {
       const res = await fetch(`/api/users/${user.id}`, {
-        method: 'PATCH',
+        body: JSON.stringify({ name: editName }),
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: editName }),
-        credentials: 'include',
+        method: 'PATCH',
       })
 
       if (!res.ok) throw new Error('Failed to update profile')

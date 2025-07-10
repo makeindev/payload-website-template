@@ -70,15 +70,15 @@ export const Users: CollectionConfig = {
       type: 'date',
     },
     {
-      name: 'loginHistory',
-      label: 'Login History',
-      type: 'array',
+      admin: { readOnly: true },
       fields: [
-        { name: 'date', type: 'date', required: true },
+        { name: 'date', required: true, type: 'date' },
         { name: 'ip', type: 'text' },
         { name: 'userAgent', type: 'text' },
       ],
-      admin: { readOnly: true },
+      label: 'Login History',
+      name: 'loginHistory',
+      type: 'array',
     },
   ],
   hooks: {

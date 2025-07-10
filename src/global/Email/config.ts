@@ -50,12 +50,12 @@ export const EmailSettings: GlobalConfig = {
       type: 'checkbox',
     },
     {
-      label: 'From Email Address',
-      name: 'emailFrom',
-      type: 'text',
-      required: true,
       admin: { position: 'sidebar' },
       defaultValue: 'noreply@example.com',
+      label: 'From Email Address',
+      name: 'emailFrom',
+      required: true,
+      type: 'text',
     },
     {
       admin: {

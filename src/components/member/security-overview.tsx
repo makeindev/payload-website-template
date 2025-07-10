@@ -1,6 +1,7 @@
 'use client'
 
 import { AlertTriangle, CheckCircle2, Globe, Lock, Shield } from 'lucide-react'
+import React, { useState } from 'react'
 
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -8,7 +9,6 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
 import type { User } from '@/payload-types'
-import React, { useState } from 'react'
 
 interface SecurityOverviewProps {
   user: User
@@ -88,8 +88,8 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
       description: 'Track account access activity',
       icon: Globe,
       name: 'Login Monitoring',
-      status: true,
       onClick: () => setShowLoginHistory(true),
+      status: true,
     },
   ]
 

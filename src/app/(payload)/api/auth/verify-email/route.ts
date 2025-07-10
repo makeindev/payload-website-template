@@ -1,6 +1,7 @@
+import configPromise from '@payload-config'
 import { NextRequest, NextResponse } from 'next/server'
 import { getPayload } from 'payload'
-import configPromise from '@payload-config'
+
 import { sendEmail, welcomeEmailTemplate } from '@/lib/email'
 
 export async function GET(request: NextRequest) {
@@ -36,19 +37,19 @@ export async function GET(request: NextRequest) {
     // Update user to mark email as verified
     await payload.update({
       collection: 'users',
-      id: user.id,
       data: {
-        emailVerified: true,
-        emailVerificationToken: null,
         emailVerificationExpires: null,
+        emailVerificationToken: null,
+        emailVerified: true,
       },
+      id: user.id,
     })
 
     // Send welcome email
     await sendEmail({
-      to: email,
-      subject: 'Welcome! Your email has been verified',
       html: welcomeEmailTemplate(email),
+      subject: 'Welcome! Your email has been verified',
+      to: email,
     })
 
     // Redirect to login with success message

@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
+import nodemailer from 'nodemailer'
 import { getPayload } from 'payload'
 
 import payloadConfig from '@/payload.config'
-import nodemailer from 'nodemailer'
 
 export async function POST(req: NextRequest) {
   const payload = await getPayload({ config: payloadConfig })
@@ -28,21 +28,21 @@ export async function POST(req: NextRequest) {
 
   // Create Nodemailer transporter using settings from global config
   const transporter = nodemailer.createTransport({
+    auth: {
+      pass: emailSettings.smtpPass,
+      user: emailSettings.smtpUser,
+    },
     host: emailSettings.smtpHost,
     port: Number(emailSettings.smtpPort) || 587,
     secure: !!emailSettings.smtpSecure,
-    auth: {
-      user: emailSettings.smtpUser,
-      pass: emailSettings.smtpPass,
-    },
   })
 
   try {
     await transporter.sendMail({
       from,
-      to,
-      subject: mailSubject,
       html,
+      subject: mailSubject,
+      to,
     })
     return NextResponse.json({ message: 'Email sent successfully.', success: true })
   } catch (error) {

@@ -15,9 +15,9 @@ export const TestEmailButton: React.FC = () => {
     setLoading(true)
     setResult(null)
     try {
-      console.log('[TestEmailButton] Sending test email with:', { to, subject, content })
+      console.log('[TestEmailButton] Sending test email with:', { content, subject, to })
       const res = await fetch('/api/email/send', {
-        body: JSON.stringify({ template: content, emailTo: to, subject }),
+        body: JSON.stringify({ emailTo: to, subject, template: content }),
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
       })

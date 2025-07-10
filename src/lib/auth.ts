@@ -151,7 +151,6 @@ export async function loginUser({
           if (user.role === 'user') {
             await payload.update({
               collection: 'users',
-              id: user.id,
               data: {
                 loginHistory: [
                   ...(user.loginHistory || []),
@@ -162,6 +161,7 @@ export async function loginUser({
                   },
                 ],
               },
+              id: user.id,
             })
           }
         }

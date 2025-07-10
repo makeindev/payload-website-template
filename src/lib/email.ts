@@ -9,11 +9,11 @@ export interface EmailOptions {
 
 export async function sendEmail({ html, subject, to }: EmailOptions) {
   try {
-    console.log('[sendEmail] Sending email with:', { to, subject })
+    console.log('[sendEmail] Sending email with:', { subject, to })
     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || ''}/api/email/send`, {
-      method: 'POST',
+      body: JSON.stringify({ emailTo: to, subject, template: html }),
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ template: html, emailTo: to, subject }),
+      method: 'POST',
     })
     console.log('[sendEmail] Response status:', res.status)
     const data = await res.json()

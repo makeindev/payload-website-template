@@ -5,9 +5,6 @@ import { buildConfig, PayloadRequest } from 'payload'
 import sharp from 'sharp' // sharp-import
 import { fileURLToPath } from 'url'
 
-// import { resendAdapter } from '@payloadcms/email-resend'
-import { defaultLexical } from '@/fields/defaultLexical'
-
 import { AdminUsers } from '@/collections/Auth/Admin'
 import { UserAccounts } from '@/collections/Auth/User/Accounts'
 import { Users } from '@/collections/Auth/User/Users'
@@ -15,9 +12,12 @@ import { Categories } from '@/collections/Categories'
 import { Media } from '@/collections/Media'
 import { Pages } from '@/collections/Pages'
 import { Posts } from '@/collections/Posts'
+// import { resendAdapter } from '@payloadcms/email-resend'
+import { defaultLexical } from '@/fields/defaultLexical'
 import { EmailSettings } from '@/global/Email/config'
 import { Footer } from '@/global/Footer/config'
 import { Header } from '@/global/Header/config'
+import { Homepage } from '@/global/Homepage'
 import { plugins } from '@/plugins'
 import { getServerSideURL } from '@/utilities/getURL'
 
@@ -78,7 +78,7 @@ export default buildConfig({
   }),
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
-  globals: [EmailSettings, Header, Footer],
+  globals: [EmailSettings, Header, Footer, Homepage],
   jobs: {
     access: {
       run: ({ req }: { req: PayloadRequest }): boolean => {

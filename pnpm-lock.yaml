@@ -15,8 +15,8 @@ importers:
         specifier: 3.44.0
         version: 3.44.0(@types/pg@8.11.6)(payload@3.44.0(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.7.3)(utf-8-validate@6.0.5))
       '@payloadcms/email-nodemailer':
-        specifier: ^3.46.0
-        version: 3.46.0(payload@3.44.0(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.7.3)(utf-8-validate@6.0.5))
+        specifier: 3.44.0
+        version: 3.44.0(payload@3.44.0(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.7.3)(utf-8-validate@6.0.5))
       '@payloadcms/live-preview-react':
         specifier: 3.44.0
         version: 3.44.0(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -48,8 +48,8 @@ importers:
         specifier: 3.44.0
         version: 3.44.0(@types/react@19.1.0)(monaco-editor@0.52.2)(next@15.3.3(@babel/core@7.28.0)(@playwright/test@1.50.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.44.0(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.7.3)(utf-8-validate@6.0.5))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3)
       '@payloadcms/translations':
-        specifier: ^3.46.0
-        version: 3.46.0
+        specifier: 3.44.0
+        version: 3.44.0
       '@payloadcms/ui':
         specifier: 3.44.0
         version: 3.44.0(@types/react@19.1.0)(monaco-editor@0.52.2)(next@15.3.3(@babel/core@7.28.0)(@playwright/test@1.50.0)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(sass@1.77.4))(payload@3.44.0(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.7.3)(utf-8-validate@6.0.5))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(typescript@5.7.3)
@@ -1480,12 +1480,6 @@ packages:
     peerDependencies:
       payload: 3.44.0
 
-  '@payloadcms/email-nodemailer@3.46.0':
-    resolution: {integrity: sha512-Gs/Ga81idRM6LEV/wyu+ydfyfe3ADOcMfNkhw8CSYOzGoL732VvvMYyHGNLjpUdFbiyogj42fPDkJwbI4in10Q==}
-    engines: {node: ^18.20.2 || >=20.9.0}
-    peerDependencies:
-      payload: 3.46.0
-
   '@payloadcms/graphql@3.44.0':
     resolution: {integrity: sha512-6YsRSYAyL3HMl1geRTvVCljOJ109fl1q23+BsoVCf+0cqkJGJfodDJxVzReQFLtFAuMhZAHb4d+p7GitJ4uozw==}
     hasBin: true
@@ -1572,9 +1566,6 @@ packages:
 
   '@payloadcms/translations@3.44.0':
     resolution: {integrity: sha512-V1eKnzPXeHgQAN5MdAMScrGbmksgLA/L0V2Jbs4oRcVIojxjCcBeifuXDvzphvwz3jx/Jr5d6MrFgSZK0D7ETA==}
-
-  '@payloadcms/translations@3.46.0':
-    resolution: {integrity: sha512-RFPIEWjXcubhop46XoJ1/JrJIepbCzMVU3qfqXTKUF+j4UpcDGPfAExnTVp2hF028gzrKF7O/ay6EhbpaNivgQ==}
 
   '@payloadcms/ui@3.44.0':
     resolution: {integrity: sha512-+GYRr972ijagO2TEiAgwMvQohwO1OTmzQ8Fq01OjKm+HUD26lMqfkAJxc6jnTE1HNvfypv4Duojfx5FODhQeMg==}
@@ -7754,11 +7745,6 @@ snapshots:
       nodemailer: 6.9.16
       payload: 3.44.0(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.7.3)(utf-8-validate@6.0.5)
 
-  '@payloadcms/email-nodemailer@3.46.0(payload@3.44.0(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.7.3)(utf-8-validate@6.0.5))':
-    dependencies:
-      nodemailer: 6.9.16
-      payload: 3.44.0(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.7.3)(utf-8-validate@6.0.5)
-
   '@payloadcms/graphql@3.44.0(graphql@16.11.0)(payload@3.44.0(bufferutil@4.0.9)(graphql@16.11.0)(typescript@5.7.3)(utf-8-validate@6.0.5))(typescript@5.7.3)':
     dependencies:
       graphql: 16.11.0
@@ -7943,10 +7929,6 @@ snapshots:
       - typescript
 
   '@payloadcms/translations@3.44.0':
-    dependencies:
-      date-fns: 4.1.0
-
-  '@payloadcms/translations@3.46.0':
     dependencies:
       date-fns: 4.1.0
 
