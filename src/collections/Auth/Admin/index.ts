@@ -1,7 +1,7 @@
 import type { CollectionConfig } from 'payload'
-import { groups } from '@/collections/groups'
 
 import { authenticated } from '@/access/authenticated'
+import { groups } from '@/collections/groups'
 
 export const AdminUsers: CollectionConfig = {
   auth: true,
@@ -15,8 +15,8 @@ export const AdminUsers: CollectionConfig = {
   },
   admin: {
     defaultColumns: ['firstName', 'email'],
-    useAsTitle: 'email',
     group: groups.users,
+    useAsTitle: 'email',
   },
   fields: [
     {

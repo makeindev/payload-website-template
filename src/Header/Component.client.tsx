@@ -44,7 +44,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, user }) => {
               className="block invert dark:invert-0"
               width={data.logo.width || 120}
               height={data.logo.height || 40}
-              style={{ maxHeight: '2.5rem', width: 'auto', height: 'auto', maxWidth: '100%' }}
+              style={{ height: 'auto', maxHeight: '2.5rem', maxWidth: '100%', width: 'auto' }}
               onError={() => setLogoError(true)}
               priority
             />

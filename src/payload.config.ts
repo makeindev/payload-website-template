@@ -16,6 +16,7 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
+import { EmailSettings } from './Email/config'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -78,20 +79,26 @@ export default buildConfig({
   }),
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
-  email: nodemailerAdapter({
-    defaultFromAddress: 'info@payloadcms.com',
-    defaultFromName: 'Payload',
-    // Nodemailer transportOptions
-    transportOptions: {
-      auth: {
-        pass: process.env.SMTP_PASS,
-        user: process.env.SMTP_USER,
+  // Replace static email config with dynamic function
+  // @ts-expect-error Payload types do not support async email config yet
+
+  email: async ({ payload }) => {
+    const emailSettings = (await payload.findGlobal({ slug: 'emailSettings' })) as any
+    return nodemailerAdapter({
+      defaultFromAddress: emailSettings.emailFrom || 'noreply@yourapp.com',
+      defaultFromName: emailSettings.fromName || 'Your App',
+      transportOptions: {
+        auth: {
+          pass: emailSettings.smtpPass,
+          user: emailSettings.smtpUser,
+        },
+        host: emailSettings.smtpHost,
+        port: Number(emailSettings.smtpPort) || 587,
+        secure: !!emailSettings.smtpSecure,
       },
-      host: process.env.SMTP_HOST,
-      port: 587,
-    },
-  }),
-  globals: [Header, Footer],
+    })
+  },
+  globals: [EmailSettings, Header, Footer],
   jobs: {
     access: {
       run: ({ req }: { req: PayloadRequest }): boolean => {

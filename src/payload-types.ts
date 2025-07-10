@@ -106,10 +106,12 @@ export interface Config {
     defaultIDType: number;
   };
   globals: {
+    emailSettings: EmailSetting;
     header: Header;
     footer: Footer;
   };
   globalsSelect: {
+    emailSettings: EmailSettingsSelect<false> | EmailSettingsSelect<true>;
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
   };
@@ -1723,6 +1725,21 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "emailSettings".
+ */
+export interface EmailSetting {
+  id: number;
+  provider: 'nodemailer';
+  smtpHost?: string | null;
+  smtpPort?: number | null;
+  smtpUser?: string | null;
+  smtpPass?: string | null;
+  smtpSecure?: boolean | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "header".
  */
 export interface Header {
@@ -1780,6 +1797,21 @@ export interface Footer {
     | null;
   updatedAt?: string | null;
   createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "emailSettings_select".
+ */
+export interface EmailSettingsSelect<T extends boolean = true> {
+  provider?: T;
+  smtpHost?: T;
+  smtpPort?: T;
+  smtpUser?: T;
+  smtpPass?: T;
+  smtpSecure?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
