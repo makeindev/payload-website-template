@@ -101,9 +101,9 @@ export const RegisterForm = () => {
       }
     } else {
       toast.success('Account Created!', {
-        description: 'Check your email to verify your account. Redirecting to dashboard...',
+        description: 'Check your email to verify your account. Redirecting to member page...',
       })
-      router.push('/dashboard')
+      router.push('/member')
     }
   }
 

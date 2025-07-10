@@ -51,9 +51,9 @@ export const LoginForm = () => {
       }
     } else {
       toast.success('Welcome back!', {
-        description: 'Redirecting to dashboard...',
+        description: 'Redirecting to member page...',
       })
-      router.push('/dashboard')
+      router.push('/member')
     }
   }
 

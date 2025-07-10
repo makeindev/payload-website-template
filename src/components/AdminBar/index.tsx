@@ -28,7 +28,7 @@ const collectionLabels = {
   },
 }
 
-const Title: React.FC = () => <span>Dashboard</span>
+const Title: React.FC = () => <span className="text-foreground">Member</span>
 
 export const AdminBar: React.FC<{
   adminBarProps?: PayloadAdminBarProps
@@ -47,19 +47,20 @@ export const AdminBar: React.FC<{
 
   return (
     <div
-      className={cn(baseClass, 'py-2 bg-black text-white', {
+      className={cn(baseClass, 'py-2 bg-card text-foreground', {
         block: show,
         hidden: !show,
       })}
     >
-      <div className="container">
+      <div className="container text-foreground">
         <PayloadAdminBar
           {...adminBarProps}
-          className="py-2 text-white"
+          className="py-2 text-foreground"
           classNames={{
-            controls: 'font-medium text-white',
-            logo: 'text-white',
-            user: 'text-white',
+            controls: 'font-medium text-foreground',
+            logo: 'text-foreground',
+            logout: 'text-foreground',
+            user: 'text-foreground',
           }}
           cmsURL={getClientSideURL()}
           collectionSlug={collection}

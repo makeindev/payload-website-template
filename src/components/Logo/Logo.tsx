@@ -41,7 +41,7 @@ export const Logo = (props: Props) => {
       fetchPriority={priority}
       decoding="async"
       className={clsx('block', className)}
-      style={{ width, height, ...style }}
+      style={{ height, width, ...style }}
       src="https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-logo-light.svg"
     />
   )

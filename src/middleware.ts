@@ -2,8 +2,8 @@ import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
 
 // Define protected routes that require authentication
-const PROTECTED_ROUTES = ['/dashboard']
-// Define routes that should redirect to dashboard if already authenticated
+const PROTECTED_ROUTES = ['/member']
+// Define routes that should redirect to member if already authenticated
 const AUTH_ROUTES = ['/login', '/register', '/forgot-password', '/reset-password']
 
 export async function middleware(request: NextRequest) {
@@ -20,7 +20,7 @@ export async function middleware(request: NextRequest) {
 
   // Redirect authenticated users away from auth pages
   if (AUTH_ROUTES.includes(pathname) && token) {
-    return NextResponse.redirect(new URL('/dashboard', request.url))
+    return NextResponse.redirect(new URL('/member', request.url))
   }
 
   return NextResponse.next()
@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
 export const config = {
   matcher: [
     // Match all protected routes
-    '/dashboard/:path*',
+    '/member/:path*',
     // Match auth routes
     '/login',
     '/register',

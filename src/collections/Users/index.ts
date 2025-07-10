@@ -1,4 +1,8 @@
 import type { CollectionConfig } from 'payload'
+import { withUsersCollection } from 'payload-auth-plugin/collection'
+import { deleteLinkedAccounts } from 'payload-auth-plugin/collection/hooks'
+
+import { Accounts } from '@/collections/Accounts'
 
 import { authenticated } from '../../access/authenticated'
 
@@ -68,5 +72,8 @@ export const Users: CollectionConfig = {
       type: 'date',
     },
   ],
+  hooks: {
+    afterDelete: [deleteLinkedAccounts(Accounts.slug)],
+  },
   timestamps: true,
 }

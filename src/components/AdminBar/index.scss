@@ -5,3 +5,8 @@
     display: none;
   }
 }
+
+.admin-bar,
+.admin-bar * {
+  color: var(--color-foreground) !important;
+}

@@ -7,7 +7,7 @@ import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { clearAuthCookies } from '@/lib/auth'
 
-export function LogoutButton() {
+export function LogoutButton({ className }: { className?: string }) {
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
@@ -38,7 +38,7 @@ export function LogoutButton() {
   }
 
   return (
-    <Button variant="outline" onClick={handleLogout} disabled={isLoading}>
+    <Button variant="outline" onClick={handleLogout} disabled={isLoading} className={className}>
       {isLoading ? 'Signing out...' : 'Logout'}
     </Button>
   )
