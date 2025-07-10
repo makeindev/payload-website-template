@@ -4,6 +4,7 @@ import { slugField } from '@/fields/slug'
 
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
+import { groups } from '@/collections/groups'
 
 export const Categories: CollectionConfig = {
   slug: 'categories',
@@ -14,7 +15,7 @@ export const Categories: CollectionConfig = {
     update: authenticated,
   },
   admin: {
-    group: 'Content Management',
+    group: groups.content,
     useAsTitle: 'title',
   },
   fields: [

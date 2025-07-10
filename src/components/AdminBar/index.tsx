@@ -45,8 +45,14 @@ export const AdminBar: React.FC<{
   React.useEffect(() => {
     fetch('/api/users/me')
       .then((res) => res.json())
-      .then((data) => setShow(data.user?.role === 'admin'))
-      .catch(() => setShow(false))
+      .then((data) => {
+        console.log('API /api/users/me response:', data)
+        setShow(data.user?.role === 'admin')
+      })
+      .catch((err) => {
+        console.error('API error:', err)
+        setShow(false)
+      })
   }, [])
 
   if (!show) return null

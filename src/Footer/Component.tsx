@@ -3,10 +3,11 @@ import Balancer from 'react-wrap-balancer'
 
 import { Container, Section } from '@/components/ds'
 import { CMSLink } from '@/components/Link'
-import { Logo } from '@/components/Logo/Logo'
 import { ThemeToggle } from '@/components/theme/theme-toggle'
 import type { Footer as FooterType } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
+import React from 'react'
+import { FooterClient } from './Component.client'
 
 export async function Footer() {
   const footerData: FooterType = await getCachedGlobal('footer', 1)()
@@ -17,17 +18,7 @@ export async function Footer() {
       <Section>
         <Container className="grid gap-2 grid-cols-1 md:grid-cols-[1fr_auto]">
           <div className="grid gap-2">
-            <Link href="/" className="space-y-6 text-lg">
-              <span className="flex items-center">
-                <Logo
-                  size="medium"
-                  loading="eager"
-                  priority="high"
-                  className="invert dark:invert-0"
-                />
-                <span className="font-bold">Website Template</span>
-              </span>
-            </Link>
+            <FooterClient footerData={footerData} />
             <p className="text-muted-foreground px-3">
               <Balancer>
                 A Modern, Open-Source Website Starter — Built with Next.js & Payload CMS

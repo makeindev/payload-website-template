@@ -11,6 +11,13 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      label: 'Logo Image',
+    },
+    {
       admin: {
         components: {
           RowLabel: '@/Footer/RowLabel#RowLabel',

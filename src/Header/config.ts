@@ -11,6 +11,13 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
+      name: 'logo',
+      type: 'upload',
+      relationTo: 'media',
+      required: false,
+      label: 'Logo Image',
+    },
+    {
       admin: {
         components: {
           RowLabel: '@/Header/RowLabel#RowLabel',

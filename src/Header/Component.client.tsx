@@ -20,6 +20,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, user }) => {
   const [theme, setTheme] = useState<string | null>(null)
   const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
+  const [logoError, setLogoError] = useState(false)
 
   useEffect(() => {
     setHeaderTheme(null)
@@ -35,7 +36,16 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, user }) => {
     <header className="container relative z-20" {...(theme ? { 'data-theme': theme } : {})}>
       <div className="py-8 flex items-center justify-between">
         <Link href="/">
-          <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+          {data.logo && typeof data.logo === 'object' && data.logo.url && !logoError ? (
+            <img
+              src={data.logo.url}
+              alt={data.logo.alt || 'Logo'}
+              className="block invert dark:invert-0 h-10"
+              onError={() => setLogoError(true)}
+            />
+          ) : (
+            <Logo loading="eager" priority="high" className="invert dark:invert-0" />
+          )}
         </Link>
         <div className="flex-1 flex items-center">
           <HeaderNav data={data} />

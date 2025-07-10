@@ -20,6 +20,7 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
+import { groups } from '@/collections/groups'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',
@@ -38,7 +39,7 @@ export const Pages: CollectionConfig<'pages'> = {
   },
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
-    group: 'Content Management',
+    group: groups.content,
     livePreview: {
       url: ({ data, req }) => {
         const path = generatePreviewPath({
