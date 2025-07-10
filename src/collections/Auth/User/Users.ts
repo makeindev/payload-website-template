@@ -3,6 +3,7 @@ import { deleteLinkedAccounts } from 'payload-auth-plugin/collection/hooks'
 
 import { authenticated } from '../../../access/authenticated'
 import { UserAccounts } from './Accounts'
+import { groups } from '@/collections/groups'
 
 export const Users: CollectionConfig = {
   auth: true,
@@ -17,6 +18,7 @@ export const Users: CollectionConfig = {
   admin: {
     defaultColumns: ['name', 'email'],
     useAsTitle: 'name',
+    group: groups.users,
   },
   fields: [
     {
