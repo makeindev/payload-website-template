@@ -52,7 +52,7 @@ export const EmailSettings: GlobalConfig = {
     {
       admin: {
         components: {
-          Field: '@/Email/TestEmailButton#TestEmailButton',
+          Field: '@/global/Email/TestEmailButton#TestEmailButton',
         },
       },
       name: 'testEmailButton',

@@ -7,10 +7,10 @@ import { draftMode } from 'next/headers'
 import React from 'react'
 import { Toaster } from 'sonner'
 
-import { AdminBar } from '@/components/AdminBar'
 import { ThemeProvider } from '@/components/theme/theme-provider'
-import { Footer } from '@/Footer/Component'
-import { Header } from '@/Header/Component'
+import { AdminBar } from '@/components/AdminBar'
+import { Footer } from '@/global/Footer/Component'
+import { Header } from '@/global/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
 import { getServerSideURL } from '@/utilities/getURL'
@@ -30,12 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <ThemeProvider>
           <Providers>
-            <AdminBar
-              adminBarProps={{
-                preview: isEnabled,
-              }}
-            />
-
+            <AdminBar preview={isEnabled} />
             <Header />
             {children}
             <Footer />

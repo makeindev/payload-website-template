@@ -5,7 +5,7 @@
 import './index.scss'
 
 import { useSelectedLayoutSegments } from 'next/navigation'
-import { useRouter } from 'next/navigation'
+// import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 import { getUser } from '@/lib/auth'
@@ -31,7 +31,7 @@ const collectionLabels = {
 
 const Title: React.FC = () => <span className="text-foreground font-bold">Admin Bar</span>
 
-export const AdminBar: React.FC = () => {
+export const AdminBar: React.FC<{ preview?: boolean }> = ({ preview }) => {
   const segments = useSelectedLayoutSegments()
   const [show, setShow] = useState(false)
   const [user, setUser] = useState<any>(null)
@@ -84,6 +84,19 @@ export const AdminBar: React.FC = () => {
           >
             Add New {collectionLabels[collection]?.singular || 'Page'}
           </button>
+          {/* Exit Preview button if preview mode is enabled */}
+          {preview && (
+            <button
+              className="px-3 py-1 rounded bg-warning text-foreground hover:bg-accent transition"
+              onClick={async () => {
+                await fetch('/next/exit-preview')
+                window.location.reload()
+              }}
+              title="Exit Preview"
+            >
+              Exit Preview
+            </button>
+          )}
           {user && (
             <span className="ml-4 text-xs opacity-80">
               {user.email} ({user.role})
