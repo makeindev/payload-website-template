@@ -19,9 +19,10 @@ export function FooterClient({ footerData }: { footerData: FooterType }) {
           <Image
             src={footerData.logo.url}
             alt={footerData.logo.alt || 'Logo'}
-            className="block invert dark:invert-0 h-10"
+            className="block invert dark:invert-0"
             width={footerData.logo.width || 120}
             height={footerData.logo.height || 40}
+            style={{ maxHeight: '2.5rem', width: 'auto', height: 'auto', maxWidth: '100%' }}
             onError={() => setLogoError(true)}
             priority
           />

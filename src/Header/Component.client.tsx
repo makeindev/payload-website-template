@@ -41,9 +41,10 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, user }) => {
             <Image
               src={data.logo.url}
               alt={data.logo.alt || 'Logo'}
-              className="block invert dark:invert-0 h-10"
+              className="block invert dark:invert-0"
               width={data.logo.width || 120}
               height={data.logo.height || 40}
+              style={{ maxHeight: '2.5rem', width: 'auto', height: 'auto', maxWidth: '100%' }}
               onError={() => setLogoError(true)}
               priority
             />
