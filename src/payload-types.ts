@@ -781,6 +781,14 @@ export interface User {
   emailVerificationExpires?: string | null;
   passwordResetToken?: string | null;
   passwordResetExpires?: string | null;
+  loginHistory?:
+    | {
+        date: string;
+        ip?: string | null;
+        userAgent?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -1402,6 +1410,14 @@ export interface UsersSelect<T extends boolean = true> {
   emailVerificationExpires?: T;
   passwordResetToken?: T;
   passwordResetExpires?: T;
+  loginHistory?:
+    | T
+    | {
+        date?: T;
+        ip?: T;
+        userAgent?: T;
+        id?: T;
+      };
   updatedAt?: T;
   createdAt?: T;
   email?: T;

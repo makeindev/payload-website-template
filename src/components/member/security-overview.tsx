@@ -1,3 +1,5 @@
+'use client'
+
 import { AlertTriangle, CheckCircle2, Globe, Lock, Shield } from 'lucide-react'
 
 import { Badge } from '@/components/ui/badge'
@@ -6,6 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Progress } from '@/components/ui/progress'
 import { Separator } from '@/components/ui/separator'
 import type { User } from '@/payload-types'
+import React, { useState } from 'react'
 
 interface SecurityOverviewProps {
   user: User
@@ -86,8 +89,16 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
       icon: Globe,
       name: 'Login Monitoring',
       status: true,
+      onClick: () => setShowLoginHistory(true),
     },
   ]
+
+  const [showLoginHistory, setShowLoginHistory] = useState(false)
+  const [page, setPage] = useState(1)
+  const perPage = 5
+  const loginHistory = user.loginHistory || []
+  const totalPages = Math.ceil(loginHistory.length / perPage)
+  const paginatedHistory = loginHistory.slice((page - 1) * perPage, page * perPage)
 
   return (
     <Card>
@@ -140,13 +151,51 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
                   </div>
                 </div>
                 {feature.action && (
-                  <Button variant="outline" size="sm" className="text-xs">
+                  <Button variant="outline" size="sm" className="text-xs" onClick={feature.onClick}>
                     {feature.action}
                   </Button>
                 )}
               </div>
             ))}
           </div>
+        </div>
+
+        <Separator />
+
+        {/* Login History */}
+        <div className="space-y-4">
+          <h4 className="text-sm font-medium">Recent Login</h4>
+          {user.loginHistory && user.loginHistory.length > 0 ? (
+            <div className="rounded-lg bg-muted/60 dark:bg-muted/30 p-3 shadow-sm border border-border">
+              <div className="flex items-center gap-2 text-sm mb-1">
+                <span className="font-medium text-muted-foreground">Date:</span>
+                <span className="text-foreground">
+                  {new Date(user.loginHistory[user.loginHistory.length - 1].date).toLocaleString()}
+                </span>
+              </div>
+              {user.loginHistory[user.loginHistory.length - 1].ip && (
+                <div className="flex items-center gap-2 text-sm mb-1">
+                  <span className="font-medium text-muted-foreground">IP:</span>
+                  <span className="text-foreground">
+                    {user.loginHistory[user.loginHistory.length - 1].ip}
+                  </span>
+                </div>
+              )}
+              {user.loginHistory[user.loginHistory.length - 1].userAgent && (
+                <div className="flex items-center gap-2 text-sm">
+                  <span className="font-medium text-muted-foreground">Browser:</span>
+                  <span
+                    className="truncate max-w-xs text-foreground"
+                    title={user.loginHistory[user.loginHistory.length - 1].userAgent!}
+                  >
+                    {user.loginHistory[user.loginHistory.length - 1].userAgent}
+                  </span>
+                </div>
+              )}
+            </div>
+          ) : (
+            <div className="text-xs text-muted-foreground">No login history recorded yet.</div>
+          )}
         </div>
 
         <Separator />
@@ -171,6 +220,86 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
           </div>
         </div>
       </CardContent>
+
+      {/* Modal for Login History */}
+      {showLoginHistory && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
+          <div className="bg-card rounded-xl shadow-2xl max-w-lg w-full p-0 relative border border-border">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-border rounded-t-xl">
+              <h3 className="text-lg font-semibold">Login History</h3>
+              <button
+                className="text-2xl font-bold text-muted-foreground hover:text-foreground transition-colors"
+                onClick={() => setShowLoginHistory(false)}
+                aria-label="Close"
+              >
+                ×
+              </button>
+            </div>
+            <div className="px-6 py-4">
+              {loginHistory.length === 0 ? (
+                <div className="text-sm text-muted-foreground">No login history recorded yet.</div>
+              ) : (
+                <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
+                  {paginatedHistory.map((entry, idx) => (
+                    <div
+                      key={idx}
+                      className="rounded-lg bg-muted/60 dark:bg-muted/30 p-3 mb-2 last:mb-0 shadow-sm border border-border"
+                    >
+                      <div className="flex items-center gap-2 text-sm mb-1">
+                        <span className="font-medium text-muted-foreground">Date:</span>
+                        <span className="text-foreground">
+                          {new Date(entry.date).toLocaleString()}
+                        </span>
+                      </div>
+                      {entry.ip && (
+                        <div className="flex items-center gap-2 text-sm mb-1">
+                          <span className="font-medium text-muted-foreground">IP:</span>
+                          <span className="text-foreground">{entry.ip}</span>
+                        </div>
+                      )}
+                      {entry.userAgent && (
+                        <div className="flex items-center gap-2 text-sm">
+                          <span className="font-medium text-muted-foreground">Browser:</span>
+                          <span
+                            className="truncate max-w-xs text-foreground"
+                            title={entry.userAgent!}
+                          >
+                            {entry.userAgent}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              )}
+              {/* Pagination Controls */}
+              {totalPages > 1 && (
+                <div className="flex justify-between items-center mt-4 gap-2">
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={page === 1}
+                    onClick={() => setPage(page - 1)}
+                  >
+                    Previous
+                  </Button>
+                  <span className="text-xs text-muted-foreground">
+                    Page {page} of {totalPages}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    disabled={page === totalPages}
+                    onClick={() => setPage(page + 1)}
+                  >
+                    Next
+                  </Button>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </Card>
   )
 }

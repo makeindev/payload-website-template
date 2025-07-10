@@ -70,10 +70,17 @@ export type ResetPasswordResponse = {
 export async function getUser(): Promise<User | null> {
   try {
     const headers = await getHeaders()
+    const headersObj = new Headers()
+    for (const [key, value] of headers.entries()) {
+      headersObj.append(key, value)
+    }
     const payload: Payload = await getPayload({ config: await configPromise })
 
-    const { user } = await payload.auth({ headers })
-    return user || null
+    const { user } = await payload.auth({ headers: headersObj })
+    if (user && user.collection === 'users') {
+      return user as User
+    }
+    return null
   } catch (error) {
     console.error('Error getting user:', error)
     return null
@@ -124,6 +131,41 @@ export async function loginUser({
           sameSite: 'strict',
           secure: process.env.NODE_ENV === 'production',
         })
+
+        // Add login history tracking here
+        const headers = await getHeaders()
+        const forwarded = headers.get('x-forwarded-for')
+        const ip = forwarded ? forwarded.split(',')[0].trim() : null // In production, this is the real client IP
+
+        // Fallback for local dev
+        const userIp = ip || '127.0.0.1'
+        const userAgent = headers.get('user-agent') || null
+        // Find the user by email
+        const users = await payload.find({
+          collection: 'users',
+          where: { email: { equals: email } },
+        })
+        if (users.docs.length > 0) {
+          const user = users.docs[0]
+          // Only update if user.role === 'user'
+          if (user.role === 'user') {
+            await payload.update({
+              collection: 'users',
+              id: user.id,
+              data: {
+                loginHistory: [
+                  ...(user.loginHistory || []),
+                  {
+                    date: new Date().toISOString(),
+                    ip: userIp,
+                    userAgent,
+                  },
+                ],
+              },
+            })
+          }
+        }
+        // End login history tracking
 
         return { success: true }
       }

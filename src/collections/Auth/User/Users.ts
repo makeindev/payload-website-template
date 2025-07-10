@@ -69,6 +69,17 @@ export const Users: CollectionConfig = {
       name: 'passwordResetExpires',
       type: 'date',
     },
+    {
+      name: 'loginHistory',
+      label: 'Login History',
+      type: 'array',
+      fields: [
+        { name: 'date', type: 'date', required: true },
+        { name: 'ip', type: 'text' },
+        { name: 'userAgent', type: 'text' },
+      ],
+      admin: { readOnly: true },
+    },
   ],
   hooks: {
     afterDelete: [deleteLinkedAccounts(UserAccounts.slug)],
