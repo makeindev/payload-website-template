@@ -1735,6 +1735,7 @@ export interface EmailSetting {
   smtpUser?: string | null;
   smtpPass?: string | null;
   smtpSecure?: boolean | null;
+  emailFrom: string;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1809,6 +1810,7 @@ export interface EmailSettingsSelect<T extends boolean = true> {
   smtpUser?: T;
   smtpPass?: T;
   smtpSecure?: T;
+  emailFrom?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

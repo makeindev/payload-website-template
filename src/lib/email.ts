@@ -1,10 +1,4 @@
-import { Resend } from 'resend'
-
-const resendApiKey = process.env.RESEND_API_KEY
-const resend = resendApiKey ? new Resend(resendApiKey) : null
-
 // Email configuration
-const emailFrom = process.env.EMAIL_FROM || 'noreply@example.com'
 const appUrl = process.env.APP_URL || 'http://localhost:3000'
 
 export interface EmailOptions {
@@ -14,22 +8,23 @@ export interface EmailOptions {
 }
 
 export async function sendEmail({ html, subject, to }: EmailOptions) {
-  if (!resend) {
-    console.warn('Resend API key not configured, skipping email send')
-    return { error: 'Email service not configured', success: false }
-  }
-
   try {
-    const data = await resend.emails.send({
-      from: emailFrom,
-      html,
-      subject,
-      to,
+    console.log('[sendEmail] Sending email with:', { to, subject })
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL || ''}/api/email/send`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ template: html, emailTo: to, subject }),
     })
-
-    return { data, success: true }
+    console.log('[sendEmail] Response status:', res.status)
+    const data = await res.json()
+    console.log('[sendEmail] Response data:', data)
+    if (data.success) {
+      return { success: true }
+    } else {
+      return { error: data.error || 'Failed to send email', success: false }
+    }
   } catch (error) {
-    console.error('Failed to send email:', error)
+    console.error('[sendEmail] Failed to send email:', error)
     return { error, success: false }
   }
 }

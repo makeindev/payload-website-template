@@ -15,18 +15,22 @@ export const TestEmailButton: React.FC = () => {
     setLoading(true)
     setResult(null)
     try {
+      console.log('[TestEmailButton] Sending test email with:', { to, subject, content })
       const res = await fetch('/api/email/send', {
-        body: JSON.stringify({ content, emailTo: to, subject }),
+        body: JSON.stringify({ template: content, emailTo: to, subject }),
         headers: { 'Content-Type': 'application/json' },
         method: 'POST',
       })
+      console.log('[TestEmailButton] Response status:', res.status)
       const data = await res.json()
+      console.log('[TestEmailButton] Response data:', data)
       if (data.success) {
         setResult('✅ ' + data.message)
       } else {
         setResult('❌ ' + (data.error || data.message))
       }
     } catch (err) {
+      console.error('[TestEmailButton] Error sending test email:', err)
       setResult('❌ ' + (err instanceof Error ? err.message : String(err)))
     }
     setLoading(false)

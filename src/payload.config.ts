@@ -1,5 +1,4 @@
 import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
-import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
@@ -79,25 +78,6 @@ export default buildConfig({
   }),
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
-  // Replace static email config with dynamic function
-  // @ts-expect-error Payload types do not support async email config yet
-
-  email: async ({ payload }) => {
-    const emailSettings = (await payload.findGlobal({ slug: 'emailSettings' })) as any
-    return nodemailerAdapter({
-      defaultFromAddress: emailSettings.emailFrom || 'noreply@yourapp.com',
-      defaultFromName: emailSettings.fromName || 'Your App',
-      transportOptions: {
-        auth: {
-          pass: emailSettings.smtpPass,
-          user: emailSettings.smtpUser,
-        },
-        host: emailSettings.smtpHost,
-        port: Number(emailSettings.smtpPort) || 587,
-        secure: !!emailSettings.smtpSecure,
-      },
-    })
-  },
   globals: [EmailSettings, Header, Footer],
   jobs: {
     access: {
