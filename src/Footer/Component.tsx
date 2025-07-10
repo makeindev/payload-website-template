@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import React from 'react'
 import Balancer from 'react-wrap-balancer'
 
 import { Container, Section } from '@/components/ds'
@@ -6,7 +7,7 @@ import { CMSLink } from '@/components/Link'
 import { ThemeToggle } from '@/components/theme/theme-toggle'
 import type { Footer as FooterType } from '@/payload-types'
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import React from 'react'
+
 import { FooterClient } from './Component.client'
 
 export async function Footer() {

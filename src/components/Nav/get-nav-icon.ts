@@ -1,20 +1,19 @@
 import type { LucideProps } from 'lucide-react'
-import type { ExoticComponent } from 'react'
-
 import {
   Blocks,
   Image,
   Palette,
+  PencilIcon,
   Settings,
   ShoppingCart,
   Tag,
   UserRound,
-  PencilIcon,
 } from 'lucide-react'
+import type { ExoticComponent } from 'react'
 
 const navIconMap = {
-  content: PencilIcon,
   categories: Image,
+  content: PencilIcon,
   customers: UserRound,
   design: Palette,
   orders: ShoppingCart,

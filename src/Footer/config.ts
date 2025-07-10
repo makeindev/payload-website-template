@@ -11,11 +11,11 @@ export const Footer: GlobalConfig = {
   },
   fields: [
     {
+      label: 'Logo Image',
       name: 'logo',
-      type: 'upload',
       relationTo: 'media',
       required: false,
-      label: 'Logo Image',
+      type: 'upload',
     },
     {
       admin: {

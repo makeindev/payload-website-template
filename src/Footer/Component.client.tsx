@@ -1,7 +1,9 @@
 'use client'
+import Image from 'next/image'
 import Link from 'next/link'
-import { Logo } from '@/components/Logo/Logo'
 import React, { useState } from 'react'
+
+import { Logo } from '@/components/Logo/Logo'
 import type { Footer as FooterType } from '@/payload-types'
 
 export function FooterClient({ footerData }: { footerData: FooterType }) {
@@ -14,16 +16,19 @@ export function FooterClient({ footerData }: { footerData: FooterType }) {
         typeof footerData.logo === 'object' &&
         footerData.logo.url &&
         !logoError ? (
-          <img
+          <Image
             src={footerData.logo.url}
             alt={footerData.logo.alt || 'Logo'}
             className="block invert dark:invert-0 h-10"
+            width={footerData.logo.width || 120}
+            height={footerData.logo.height || 40}
             onError={() => setLogoError(true)}
+            priority
           />
         ) : (
           <Logo size="medium" loading="eager" priority="high" className="invert dark:invert-0" />
         )}
-        <span className="font-bold">Website Template</span>
+        <span className="font-bold ml-4">Website Template</span>
       </span>
     </Link>
   )

@@ -1,4 +1,5 @@
 'use client'
+import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -37,11 +38,14 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, user }) => {
       <div className="py-8 flex items-center justify-between">
         <Link href="/">
           {data.logo && typeof data.logo === 'object' && data.logo.url && !logoError ? (
-            <img
+            <Image
               src={data.logo.url}
               alt={data.logo.alt || 'Logo'}
               className="block invert dark:invert-0 h-10"
+              width={data.logo.width || 120}
+              height={data.logo.height || 40}
               onError={() => setLogoError(true)}
+              priority
             />
           ) : (
             <Logo loading="eager" priority="high" className="invert dark:invert-0" />

@@ -7,6 +7,7 @@ import {
 } from '@payloadcms/plugin-seo/fields'
 import type { CollectionConfig } from 'payload'
 
+import { groups } from '@/collections/groups'
 import { slugField } from '@/fields/slug'
 import { hero } from '@/heros/config'
 
@@ -20,7 +21,6 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidatePage } from './hooks/revalidatePage'
-import { groups } from '@/collections/groups'
 
 export const Pages: CollectionConfig<'pages'> = {
   slug: 'pages',

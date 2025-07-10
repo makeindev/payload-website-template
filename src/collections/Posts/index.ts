@@ -15,6 +15,7 @@ import {
 } from '@payloadcms/richtext-lexical'
 import type { CollectionConfig } from 'payload'
 
+import { groups } from '@/collections/groups'
 import { slugField } from '@/fields/slug'
 
 import { authenticated } from '../../access/authenticated'
@@ -25,7 +26,6 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidatePost } from './hooks/revalidatePost'
-import { groups } from '@/collections/groups'
 
 export const Posts: CollectionConfig<'posts'> = {
   slug: 'posts',

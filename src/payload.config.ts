@@ -6,7 +6,6 @@ import { buildConfig, PayloadRequest } from 'payload'
 import sharp from 'sharp' // sharp-import
 import { fileURLToPath } from 'url'
 
-import { Logo } from '@/components/Logo/Logo'
 // import { resendAdapter } from '@payloadcms/email-resend'
 import { defaultLexical } from '@/fields/defaultLexical'
 

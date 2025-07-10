@@ -1,13 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 
 import './index.scss'
 
-import type { PayloadAdminBarProps } from '@payloadcms/admin-bar'
-import { PayloadAdminBar } from '@payloadcms/admin-bar'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
+import { getUser } from '@/lib/auth'
 import { getClientSideURL } from '@/utilities/getURL'
 import { cn } from '@/utilities/ui'
 
@@ -28,72 +29,67 @@ const collectionLabels = {
   },
 }
 
-const Title: React.FC = () => <span className="text-foreground">Member</span>
+const Title: React.FC = () => <span className="text-foreground font-bold">Admin Bar</span>
 
-export const AdminBar: React.FC<{
-  adminBarProps?: PayloadAdminBarProps
-}> = (props) => {
-  const { adminBarProps } = props || {}
+export const AdminBar: React.FC = () => {
   const segments = useSelectedLayoutSegments()
   const [show, setShow] = useState(false)
+  const [user, setUser] = useState<any>(null)
   const collection = (
     collectionLabels[segments?.[1] as keyof typeof collectionLabels] ? segments[1] : 'pages'
   ) as keyof typeof collectionLabels
-  const router = useRouter()
 
-  // Fetch user from API on mount and show only if role is 'admin'
   React.useEffect(() => {
-    fetch('/api/users/me')
-      .then((res) => res.json())
-      .then((data) => {
-        console.log('API /api/users/me response:', data)
-        setShow(data.user?.role === 'admin')
-      })
-      .catch((err) => {
-        console.error('API error:', err)
-        setShow(false)
-      })
+    ;(async () => {
+      const user = await getUser()
+      setUser(user)
+      const isAdmin =
+        !!user &&
+        ((user.role &&
+          user.role.toLowerCase() === 'admin' &&
+          'collection' in user &&
+          user.collection === 'adminUsers') ||
+          (user.role && user.role.toLowerCase() === 'admin'))
+      setShow(isAdmin)
+    })()
   }, [])
 
   if (!show) return null
 
   return (
-    <div
-      className={cn(baseClass, 'py-2 bg-card text-foreground', {
-        block: show,
-        hidden: !show,
-      })}
-    >
-      <div className="container text-foreground">
-        <PayloadAdminBar
-          {...adminBarProps}
-          className="py-2 text-foreground"
-          classNames={{
-            controls: 'font-medium text-foreground',
-            logo: 'text-foreground',
-            logout: 'text-foreground',
-            user: 'text-foreground',
-          }}
-          cmsURL={getClientSideURL()}
-          collectionSlug={collection}
-          collectionLabels={{
-            plural: collectionLabels[collection]?.plural || 'Pages',
-            singular: collectionLabels[collection]?.singular || 'Page',
-          }}
-          logo={<Title />}
-          onPreviewExit={() => {
-            fetch('/next/exit-preview').then(() => {
-              router.push('/')
-              router.refresh()
-            })
-          }}
-          style={{
-            backgroundColor: 'transparent',
-            padding: 0,
-            position: 'relative',
-            zIndex: 'unset',
-          }}
-        />
+    <div className={cn(baseClass, 'py-2 bg-card text-foreground', { block: show, hidden: !show })}>
+      <div className="container flex items-center justify-between gap-4 text-foreground">
+        <div className="flex items-center gap-3">
+          <Title />
+          <span className="text-xs opacity-70">
+            {collectionLabels[collection]?.plural || 'Pages'}
+          </span>
+        </div>
+        <div className="flex items-center gap-2">
+          <button
+            className="px-3 py-1 rounded bg-muted text-foreground hover:bg-accent transition"
+            onClick={() => {
+              window.open(getClientSideURL() + '/admin', '_blank')
+            }}
+            title="Go to Admin"
+          >
+            Go to Admin
+          </button>
+          <button
+            className="px-3 py-1 rounded bg-muted text-foreground hover:bg-accent transition"
+            onClick={() => {
+              window.open(getClientSideURL() + `/admin/collections/${collection}/create`, '_blank')
+            }}
+            title={`Add New ${collectionLabels[collection]?.singular || 'Page'}`}
+          >
+            Add New {collectionLabels[collection]?.singular || 'Page'}
+          </button>
+          {user && (
+            <span className="ml-4 text-xs opacity-80">
+              {user.email} ({user.role})
+            </span>
+          )}
+        </div>
       </div>
     </div>
   )

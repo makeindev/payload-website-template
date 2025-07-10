@@ -29,7 +29,7 @@ export default async function Member() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <Prose>
-              <h1>Member</h1>
+              <h1>Member Area</h1>
               <p>Welcome back, {user.email.split('@')[0]}!</p>
             </Prose>
           </div>
