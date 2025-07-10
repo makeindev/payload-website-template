@@ -73,11 +73,8 @@ export interface Config {
     media: Media;
     categories: Category;
     users: User;
-    accounts: Account;
+    userAccounts: UserAccount;
     adminUsers: AdminUser;
-    adminAccounts: AdminAccount;
-    appUsers: AppUser;
-    appAccounts: AppAccount;
     redirects: Redirect;
     forms: Form;
     'form-submissions': FormSubmission;
@@ -94,11 +91,8 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
-    accounts: AccountsSelect<false> | AccountsSelect<true>;
+    userAccounts: UserAccountsSelect<false> | UserAccountsSelect<true>;
     adminUsers: AdminUsersSelect<false> | AdminUsersSelect<true>;
-    adminAccounts: AdminAccountsSelect<false> | AdminAccountsSelect<true>;
-    appUsers: AppUsersSelect<false> | AppUsersSelect<true>;
-    appAccounts: AppAccountsSelect<false> | AppAccountsSelect<true>;
     redirects: RedirectsSelect<false> | RedirectsSelect<true>;
     forms: FormsSelect<false> | FormsSelect<true>;
     'form-submissions': FormSubmissionsSelect<false> | FormSubmissionsSelect<true>;
@@ -274,7 +268,7 @@ export interface Post {
     description?: string | null;
   };
   publishedAt?: string | null;
-  authors?: (number | User)[] | null;
+  authors?: (number | AdminUser)[] | null;
   populatedAuthors?:
     | {
         id?: string | null;
@@ -402,20 +396,13 @@ export interface Category {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users".
+ * via the `definition` "adminUsers".
  */
-export interface User {
+export interface AdminUser {
   id: number;
-  name?: string | null;
-  role: 'admin' | 'user';
-  /**
-   * Has the user verified their email address
-   */
-  emailVerified?: boolean | null;
-  emailVerificationToken?: string | null;
-  emailVerificationExpires?: string | null;
-  passwordResetToken?: string | null;
-  passwordResetExpires?: string | null;
+  firstName?: string | null;
+  lastName?: string | null;
+  role: 'admin' | 'staff';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -778,51 +765,20 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "accounts".
+ * via the `definition` "users".
  */
-export interface Account {
+export interface User {
   id: number;
   name?: string | null;
-  picture?: string | null;
-  user: number | User;
-  issuerName: string;
-  scope?: string | null;
-  sub: string;
-  passkey?: {
-    credentialId: string;
-    publicKey:
-      | {
-          [k: string]: unknown;
-        }
-      | unknown[]
-      | string
-      | number
-      | boolean
-      | null;
-    counter: number;
-    transports:
-      | {
-          [k: string]: unknown;
-        }
-      | unknown[]
-      | string
-      | number
-      | boolean
-      | null;
-    deviceType: string;
-    backedUp: boolean;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "adminUsers".
- */
-export interface AdminUser {
-  id: number;
-  firstName?: string | null;
-  lastName?: string | null;
+  role: 'user';
+  /**
+   * Has the user verified their email address
+   */
+  emailVerified?: boolean | null;
+  emailVerificationToken?: string | null;
+  emailVerificationExpires?: string | null;
+  passwordResetToken?: string | null;
+  passwordResetExpires?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -843,70 +799,13 @@ export interface AdminUser {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "adminAccounts".
+ * via the `definition` "userAccounts".
  */
-export interface AdminAccount {
+export interface UserAccount {
   id: number;
   name?: string | null;
   picture?: string | null;
-  user: number | AdminUser;
-  issuerName: string;
-  scope?: string | null;
-  sub: string;
-  passkey?: {
-    credentialId: string;
-    publicKey:
-      | {
-          [k: string]: unknown;
-        }
-      | unknown[]
-      | string
-      | number
-      | boolean
-      | null;
-    counter: number;
-    transports:
-      | {
-          [k: string]: unknown;
-        }
-      | unknown[]
-      | string
-      | number
-      | boolean
-      | null;
-    deviceType: string;
-    backedUp: boolean;
-  };
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "appUsers".
- */
-export interface AppUser {
-  id: number;
-  name?: string | null;
-  /**
-   * Has the user verified their email address
-   */
-  emailVerified?: boolean | null;
-  emailVerificationToken?: string | null;
-  emailVerificationExpires?: string | null;
-  passwordResetToken?: string | null;
-  passwordResetExpires?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "appAccounts".
- */
-export interface AppAccount {
-  id: number;
-  name?: string | null;
-  picture?: string | null;
-  user: number | AppUser;
+  user: number | User;
   issuerName: string;
   scope?: string | null;
   sub: string;
@@ -1131,24 +1030,12 @@ export interface PayloadLockedDocument {
         value: number | User;
       } | null)
     | ({
-        relationTo: 'accounts';
-        value: number | Account;
+        relationTo: 'userAccounts';
+        value: number | UserAccount;
       } | null)
     | ({
         relationTo: 'adminUsers';
         value: number | AdminUser;
-      } | null)
-    | ({
-        relationTo: 'adminAccounts';
-        value: number | AdminAccount;
-      } | null)
-    | ({
-        relationTo: 'appUsers';
-        value: number | AppUser;
-      } | null)
-    | ({
-        relationTo: 'appAccounts';
-        value: number | AppAccount;
       } | null)
     | ({
         relationTo: 'redirects';
@@ -1532,9 +1419,9 @@ export interface UsersSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "accounts_select".
+ * via the `definition` "userAccounts_select".
  */
-export interface AccountsSelect<T extends boolean = true> {
+export interface UserAccountsSelect<T extends boolean = true> {
   name?: T;
   picture?: T;
   user?: T;
@@ -1561,6 +1448,7 @@ export interface AccountsSelect<T extends boolean = true> {
 export interface AdminUsersSelect<T extends boolean = true> {
   firstName?: T;
   lastName?: T;
+  role?: T;
   updatedAt?: T;
   createdAt?: T;
   email?: T;
@@ -1577,68 +1465,6 @@ export interface AdminUsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "adminAccounts_select".
- */
-export interface AdminAccountsSelect<T extends boolean = true> {
-  name?: T;
-  picture?: T;
-  user?: T;
-  issuerName?: T;
-  scope?: T;
-  sub?: T;
-  passkey?:
-    | T
-    | {
-        credentialId?: T;
-        publicKey?: T;
-        counter?: T;
-        transports?: T;
-        deviceType?: T;
-        backedUp?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "appUsers_select".
- */
-export interface AppUsersSelect<T extends boolean = true> {
-  name?: T;
-  emailVerified?: T;
-  emailVerificationToken?: T;
-  emailVerificationExpires?: T;
-  passwordResetToken?: T;
-  passwordResetExpires?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "appAccounts_select".
- */
-export interface AppAccountsSelect<T extends boolean = true> {
-  name?: T;
-  picture?: T;
-  user?: T;
-  issuerName?: T;
-  scope?: T;
-  sub?: T;
-  passkey?:
-    | T
-    | {
-        credentialId?: T;
-        publicKey?: T;
-        counter?: T;
-        transports?: T;
-        deviceType?: T;
-        backedUp?: T;
-      };
-  updatedAt?: T;
-  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

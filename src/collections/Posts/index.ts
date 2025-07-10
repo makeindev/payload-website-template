@@ -190,7 +190,7 @@ export const Posts: CollectionConfig<'posts'> = {
       },
       hasMany: true,
       name: 'authors',
-      relationTo: 'users',
+      relationTo: 'adminUsers',
       type: 'relationship',
     },
     // This field is only used to populate the user data via the `populateAuthors` hook

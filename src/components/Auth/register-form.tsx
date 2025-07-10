@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 import type { RegisterResponse } from '@/lib/auth'
 import { registerUser } from '@/lib/auth'
 import { validateEmail, validatePassword } from '@/lib/validation'
+import { Eye, EyeOff } from 'lucide-react'
 
 import { SubmitButton } from './submit-button'
 
@@ -14,6 +15,7 @@ export const RegisterForm = () => {
   const [isPending, setIsPending] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
   const [passwordFeedback, setPasswordFeedback] = useState<string | null>(null)
   const [passwordStrength, setPasswordStrength] = useState<'weak' | 'medium' | 'strong' | null>(
     null,
@@ -120,16 +122,27 @@ export const RegisterForm = () => {
         required
       />
 
-      <input
-        type="password"
-        name="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        autoComplete="new-password"
-        placeholder="Password"
-        className="w-full focus:outline-none border-b pb-2"
-        required
-      />
+      <div className="relative">
+        <input
+          type={showPassword ? 'text' : 'password'}
+          name="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          autoComplete="new-password"
+          placeholder="Password"
+          className="w-full focus:outline-none border-b pb-2 pr-10"
+          required
+        />
+        <button
+          type="button"
+          tabIndex={-1}
+          className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground"
+          onClick={() => setShowPassword((v) => !v)}
+          aria-label={showPassword ? 'Hide password' : 'Show password'}
+        >
+          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+        </button>
+      </div>
 
       {password && (
         <div className="mt-1">

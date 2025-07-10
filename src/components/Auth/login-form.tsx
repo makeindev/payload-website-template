@@ -8,10 +8,12 @@ import { toast } from 'sonner'
 import { SubmitButton } from '@/components/auth/submit-button'
 import type { LoginResponse } from '@/lib/auth'
 import { loginUser } from '@/lib/auth'
+import { Eye, EyeOff } from 'lucide-react'
 
 export const LoginForm = () => {
   const [isPending, setIsPending] = useState(false)
   const [rememberMe, setRememberMe] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -68,14 +70,25 @@ export const LoginForm = () => {
         required
       />
 
-      <input
-        type="password"
-        name="password"
-        placeholder="Password"
-        autoComplete="current-password"
-        className="w-full focus:outline-none border-b pb-2 h-8"
-        required
-      />
+      <div className="relative">
+        <input
+          type={showPassword ? 'text' : 'password'}
+          name="password"
+          placeholder="Password"
+          autoComplete="current-password"
+          className="w-full focus:outline-none border-b pb-2 h-8 pr-10"
+          required
+        />
+        <button
+          type="button"
+          tabIndex={-1}
+          className="absolute right-2 top-1/2 -translate-y-1/2 text-muted-foreground"
+          onClick={() => setShowPassword((v) => !v)}
+          aria-label={showPassword ? 'Hide password' : 'Show password'}
+        >
+          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+        </button>
+      </div>
       <div className="text-xs text-muted-foreground">
         <Link href="/forgot-password" className="hover:underline">
           Forgot password?

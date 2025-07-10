@@ -1,9 +1,9 @@
 import { CollectionConfig } from 'payload'
 import { withAccountCollection } from 'payload-auth-plugin/collection'
 
-export const Accounts: CollectionConfig = withAccountCollection(
+export const UserAccounts: CollectionConfig = withAccountCollection(
   {
-    slug: 'accounts',
+    slug: 'userAccounts',
   },
   'users',
 )

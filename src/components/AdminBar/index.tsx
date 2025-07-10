@@ -2,7 +2,7 @@
 
 import './index.scss'
 
-import type { PayloadAdminBarProps, PayloadMeUser } from '@payloadcms/admin-bar'
+import type { PayloadAdminBarProps } from '@payloadcms/admin-bar'
 import { PayloadAdminBar } from '@payloadcms/admin-bar'
 import { useSelectedLayoutSegments } from 'next/navigation'
 import { useRouter } from 'next/navigation'
@@ -41,9 +41,15 @@ export const AdminBar: React.FC<{
   ) as keyof typeof collectionLabels
   const router = useRouter()
 
-  const onAuthChange = React.useCallback((user: PayloadMeUser) => {
-    setShow(Boolean(user?.id))
+  // Fetch user from API on mount and show only if role is 'admin'
+  React.useEffect(() => {
+    fetch('/api/users/me')
+      .then((res) => res.json())
+      .then((data) => setShow(data.user?.role === 'admin'))
+      .catch(() => setShow(false))
   }, [])
+
+  if (!show) return null
 
   return (
     <div
@@ -69,7 +75,6 @@ export const AdminBar: React.FC<{
             singular: collectionLabels[collection]?.singular || 'Page',
           }}
           logo={<Title />}
-          onAuthChange={onAuthChange}
           onPreviewExit={() => {
             fetch('/next/exit-preview').then(() => {
               router.push('/')

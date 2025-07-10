@@ -15,6 +15,7 @@ import { InitTheme } from '@/providers/Theme/InitTheme'
 import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { cn } from '@/utilities/ui'
+import { Toaster } from 'sonner'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { isEnabled } = await draftMode()
@@ -40,6 +41,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <Footer />
           </Providers>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   )

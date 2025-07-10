@@ -3,24 +3,19 @@ import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
-import { authPlugin } from 'payload-auth-plugin'
-import { GitHubAuthProvider, GoogleAuthProvider } from 'payload-auth-plugin/providers'
 import sharp from 'sharp' // sharp-import
 import { fileURLToPath } from 'url'
 // import { resendAdapter } from '@payloadcms/email-resend'
 
 import { defaultLexical } from '@/fields/defaultLexical'
 
-import { Accounts } from './collections/Accounts'
 import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
-import { Users } from './collections/Users'
-import { AdminUsers } from './collections/Auth/Admin/Users'
-import { AdminAccounts } from './collections/Auth/Admin/Accounts'
-import { AppUsers } from './collections/Auth/App/Users'
-import { AppAccounts } from './collections/Auth/App/Accounts'
+import { AdminUsers } from './collections/Auth/Admin'
+import { Users } from './collections/Auth/User/Users'
+import { UserAccounts } from './collections/Auth/User/Accounts'
 import { Footer } from './Footer/config'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
@@ -32,13 +27,13 @@ const dirname = path.dirname(filename)
 export default buildConfig({
   admin: {
     components: {
-      afterLogin: ['@/components/AfterLogin/index#AdminLogin'],
-      views: {
-        login: {
-          Component: '@/views/AdminLogin/index#AdminLoginView',
-          path: '/auth/signin',
-        },
-      },
+      // afterLogin: ['@/components/AfterLogin/index#AdminLogin'],
+      // views: {
+      //   login: {
+      //     Component: '@/views/AdminLogin/index#AdminLoginView',
+      //     path: '/auth/signin',
+      //   },
+      // },
       // The `BeforeMember` component renders the 'welcome' block that you see after logging into your admin panel.
       // Feel free to delete this at any time. Simply remove the line below.
       beforeDashboard: ['@/components/BeforeMember'],
@@ -74,18 +69,7 @@ export default buildConfig({
       ],
     },
   },
-  collections: [
-    Pages,
-    Posts,
-    Media,
-    Categories,
-    Users,
-    Accounts,
-    AdminUsers,
-    AdminAccounts,
-    AppUsers,
-    AppAccounts,
-  ],
+  collections: [Pages, Posts, Media, Categories, Users, UserAccounts, AdminUsers],
   cors: [getServerSideURL()].filter(Boolean),
   db: vercelPostgresAdapter({
     pool: {
@@ -130,25 +114,6 @@ export default buildConfig({
         media: true,
       },
       token: process.env.BLOB_READ_WRITE_TOKEN || '',
-    }),
-    authPlugin({
-      accountsCollectionSlug: Accounts.slug,
-      allowOAuthAutoSignUp: true,
-      errorRedirectPath: '/admin/auth/signin',
-      name: 'admin', // must be unique
-      providers: [
-        GoogleAuthProvider({
-          client_id: process.env.GOOGLE_CLIENT_ID as string,
-          client_secret: process.env.GOOGLE_CLIENT_SECRET as string,
-        }),
-        GitHubAuthProvider({
-          client_id: process.env.GIT_CLIENT_ID as string,
-          client_secret: process.env.GIT_CLIENT_SECRET as string,
-        }),
-      ],
-      useAdmin: true, // not mandatory, and only use this for admin
-      successRedirectPath: '/admin/collections',
-      usersCollectionSlug: Users.slug,
     }),
   ],
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL,

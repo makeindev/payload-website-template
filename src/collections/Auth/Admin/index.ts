@@ -1,9 +1,6 @@
 import type { CollectionConfig } from 'payload'
-import { deleteLinkedAccounts } from 'payload-auth-plugin/collection/hooks'
 
 import { authenticated } from '@/access/authenticated'
-
-import { AdminAccounts } from './Accounts'
 
 export const AdminUsers: CollectionConfig = {
   auth: true,
@@ -28,9 +25,16 @@ export const AdminUsers: CollectionConfig = {
       name: 'lastName',
       type: 'text',
     },
+    {
+      defaultValue: 'admin',
+      name: 'role',
+      options: [
+        { label: 'Admin', value: 'admin' },
+        { label: 'Staff', value: 'staff' },
+      ],
+      required: true,
+      type: 'select',
+    },
   ],
-  hooks: {
-    afterDelete: [deleteLinkedAccounts(AdminAccounts.slug)],
-  },
   timestamps: true,
 }
