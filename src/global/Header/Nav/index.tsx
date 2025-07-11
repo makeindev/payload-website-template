@@ -11,8 +11,8 @@ export const HeaderNav: React.FC<{ data: HeaderType }> = ({ data }) => {
   const navItems = data?.navItems || []
 
   return (
-    <nav className="flex items-center justify-between w-full">
-      <div className="flex gap-3 items-center ml-8 md:ml-4 sm:ml-2">
+    <nav className="flex items-center ml-4 justify-between w-full">
+      <div className="flex gap-5 items-center ml-8 md:ml-4 sm:ml-2">
         {navItems.map(({ link }, i) => (
           <CMSLink key={i} {...link} appearance="link" />
         ))}

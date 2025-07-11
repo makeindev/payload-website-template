@@ -17,9 +17,13 @@ import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { cn } from '@/utilities/ui'
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+// Custom wrapper to handle draftMode and preview prop
+const AdminBarWrapper = async () => {
   const { isEnabled } = await draftMode()
+  return <AdminBar preview={isEnabled} />
+}
 
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
       <head>
@@ -30,9 +34,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <ThemeProvider>
           <Providers>
-            <AdminBar preview={isEnabled} />
+            {/* Use the custom AdminBarWrapper for draftMode awareness */}
+            {await AdminBarWrapper()}
             <Header />
-            {children}
+            <div className="max-w-7xl mx-auto">{children}</div>
             <Footer />
           </Providers>
         </ThemeProvider>

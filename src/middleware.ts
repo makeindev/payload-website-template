@@ -9,6 +9,7 @@ const AUTH_ROUTES = ['/login', '/register', '/forgot-password', '/reset-password
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
   const token = request.cookies.get('payload-token')?.value
+  const user = request.cookies.get('payload-user')?.value
 
   // Check if the route is protected and user is not authenticated
   if (PROTECTED_ROUTES.some((route) => pathname.startsWith(route)) && !token) {
@@ -19,8 +20,20 @@ export async function middleware(request: NextRequest) {
   }
 
   // Redirect authenticated users away from auth pages
-  if (AUTH_ROUTES.includes(pathname) && token) {
-    return NextResponse.redirect(new URL('/member', request.url))
+  if (AUTH_ROUTES.includes(pathname) && user) {
+    // If user is adminUser, redirect to /admin, else to /member
+    if (
+      (user as any)?.collection === 'adminUsers' ||
+      (user as any)?.role?.toLowerCase() === 'admin'
+    ) {
+      if (pathname !== '/admin') {
+        return NextResponse.redirect(new URL('/admin', request.url))
+      }
+    } else {
+      if (pathname !== '/member') {
+        return NextResponse.redirect(new URL('/member', request.url))
+      }
+    }
   }
 
   return NextResponse.next()

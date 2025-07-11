@@ -11,6 +11,7 @@ import React, { useState } from 'react'
 import { getUser } from '@/lib/auth'
 import { getClientSideURL } from '@/utilities/getURL'
 import { cn } from '@/utilities/ui'
+import { Button } from '@/components/ui/button'
 
 const baseClass = 'admin-bar'
 
@@ -66,28 +67,28 @@ export const AdminBar: React.FC<{ preview?: boolean }> = ({ preview }) => {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          <button
-            className="px-3 py-1 rounded bg-muted text-foreground hover:bg-accent transition"
+          <Button
+            variant="outline"
             onClick={() => {
               window.open(getClientSideURL() + '/admin', '_blank')
             }}
             title="Go to Admin"
           >
             Go to Admin
-          </button>
-          <button
-            className="px-3 py-1 rounded bg-muted text-foreground hover:bg-accent transition"
+          </Button>
+          <Button
+            variant="outline"
             onClick={() => {
               window.open(getClientSideURL() + `/admin/collections/${collection}/create`, '_blank')
             }}
             title={`Add New ${collectionLabels[collection]?.singular || 'Page'}`}
           >
             Add New {collectionLabels[collection]?.singular || 'Page'}
-          </button>
+          </Button>
           {/* Exit Preview button if preview mode is enabled */}
           {preview && (
-            <button
-              className="px-3 py-1 rounded bg-warning text-foreground hover:bg-accent transition"
+            <Button
+              variant="destructive"
               onClick={async () => {
                 await fetch('/next/exit-preview')
                 window.location.reload()
@@ -95,7 +96,7 @@ export const AdminBar: React.FC<{ preview?: boolean }> = ({ preview }) => {
               title="Exit Preview"
             >
               Exit Preview
-            </button>
+            </Button>
           )}
           {user && (
             <span className="ml-4 text-xs opacity-80">

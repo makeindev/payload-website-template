@@ -6,6 +6,7 @@ import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 import type { Page } from '@/payload-types'
 import { useHeaderTheme } from '@/providers/HeaderTheme'
+import { Container } from '@/components/ds'
 
 export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText }) => {
   const { setHeaderTheme } = useHeaderTheme()
@@ -36,9 +37,11 @@ export const HighImpactHero: React.FC<Page['hero']> = ({ links, media, richText 
         </div>
       </div>
       <div className="min-h-[80vh] select-none">
-        {media && typeof media === 'object' && (
-          <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
-        )}
+        <Container>
+          {media && typeof media === 'object' && (
+            <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
+          )}
+        </Container>
       </div>
     </div>
   )

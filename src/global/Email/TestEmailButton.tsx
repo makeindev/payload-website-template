@@ -25,13 +25,13 @@ export const TestEmailButton: React.FC = () => {
       const data = await res.json()
       console.log('[TestEmailButton] Response data:', data)
       if (data.success) {
-        setResult('✅ ' + data.message)
+        setResult('success: ' + data.message)
       } else {
-        setResult('❌ ' + (data.error || data.message))
+        setResult('failed: ' + (data.error || data.message))
       }
     } catch (err) {
       console.error('[TestEmailButton] Error sending test email:', err)
-      setResult('❌ ' + (err instanceof Error ? err.message : String(err)))
+      setResult('failed: ' + (err instanceof Error ? err.message : String(err)))
     }
     setLoading(false)
   }
@@ -90,7 +90,7 @@ export const TestEmailButton: React.FC = () => {
     width: '100%',
   }
   const resultStyle: React.CSSProperties = {
-    color: result?.startsWith('✅')
+    color: result?.startsWith('success')
       ? isDark
         ? '#22c55e'
         : '#16a34a'
