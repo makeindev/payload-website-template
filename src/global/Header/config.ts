@@ -4,6 +4,12 @@ import { link } from '@/fields/link'
 
 import { revalidateHeader } from './hooks/revalidateHeader'
 
+const subMenuGroup = {
+  type: 'group' as const,
+  name: 'item',
+  fields: [link({ appearances: false })],
+}
+
 export const Header: GlobalConfig = {
   slug: 'header',
   access: {
@@ -25,9 +31,13 @@ export const Header: GlobalConfig = {
         initCollapsed: true,
       },
       fields: [
-        link({
-          appearances: false,
-        }),
+        link({ appearances: false }),
+        {
+          name: 'children',
+          label: 'Sub Menu',
+          type: 'array' as const,
+          fields: [subMenuGroup],
+        },
       ],
       maxRows: 6,
       name: 'navItems',
