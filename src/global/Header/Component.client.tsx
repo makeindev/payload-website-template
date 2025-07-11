@@ -39,7 +39,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, user }) => {
       {...(theme ? { 'data-theme': theme } : {})}
     >
       <div className="py-8 flex items-center justify-between">
-        <Link href="/">
+        <Link href="/" className="mr-6">
           {data.logo && typeof data.logo === 'object' && data.logo.url && !logoError ? (
             <Image
               src={data.logo.url}
@@ -56,9 +56,27 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, user }) => {
           )}
         </Link>
         <div className="flex-1 flex items-center">
-          <HeaderNav data={data} />
+          <HeaderNav navItems={data.navItems || []} />
         </div>
-        <div className="ml-4">
+        <div className="flex items-center gap-2 ml-4">
+          <Link
+            href="/search"
+            className="flex items-center px-3 py-2 rounded hover:bg-accent focus:bg-accent text-foreground"
+            aria-label="Search"
+          >
+            <span className="sr-only">Search</span>
+            <svg
+              className="w-5 h-5 text-primary"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <circle cx="11" cy="11" r="8" />
+              <line x1="21" y1="21" x2="16.65" y2="16.65" />
+            </svg>
+          </Link>
           <AuthNav user={user} />
         </div>
       </div>

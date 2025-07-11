@@ -7,7 +7,16 @@ import { revalidateHeader } from './hooks/revalidateHeader'
 const subMenuGroup = {
   type: 'group' as const,
   name: 'item',
-  fields: [link({ appearances: false })],
+  fields: [
+    link({ appearances: false }),
+    {
+      name: 'menuContent',
+      label: 'Menu Content',
+      type: 'richText',
+      required: false,
+      admin: {},
+    } as const,
+  ],
 }
 
 export const Header: GlobalConfig = {

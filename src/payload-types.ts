@@ -1799,6 +1799,21 @@ export interface Header {
                   url?: string | null;
                   label: string;
                 };
+                menuContent?: {
+                  root: {
+                    type: string;
+                    children: {
+                      type: string;
+                      version: number;
+                      [k: string]: unknown;
+                    }[];
+                    direction: ('ltr' | 'rtl') | null;
+                    format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+                    indent: number;
+                    version: number;
+                  };
+                  [k: string]: unknown;
+                } | null;
               };
               id?: string | null;
             }[]
@@ -1901,6 +1916,7 @@ export interface HeaderSelect<T extends boolean = true> {
                           url?: T;
                           label?: T;
                         };
+                    menuContent?: T;
                   };
               id?: T;
             };
