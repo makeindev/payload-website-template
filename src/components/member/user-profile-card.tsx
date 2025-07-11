@@ -65,7 +65,7 @@ export function UserProfileCard({ accountAgeDays, setUser, user }: UserProfileCa
         user.name = editName
       }
       setEditName(editName)
-    } catch (err) {
+    } catch (_) {
       setEditLoading(false)
       alert('Failed to update profile')
     }
