@@ -8,8 +8,6 @@ import { redirect } from 'next/navigation'
 import type { Payload } from 'payload'
 import { getPayload } from 'payload'
 
-import type { User } from '@/payload-types'
-
 import {
   passwordChangedEmailTemplate,
   passwordResetEmailTemplate,
@@ -67,7 +65,27 @@ export type ResetPasswordResponse = {
  * Get the currently authenticated user
  * @returns The authenticated user or null if not authenticated
  */
-export async function getUser(): Promise<User | null> {
+// Add AdminUser type for correct typing
+import type { User as PayloadUser } from '@/payload-types'
+type AdminUser = {
+  id: number
+  firstName?: string | null
+  lastName?: string | null
+  role: 'admin' | 'staff'
+  updatedAt: string
+  createdAt: string
+  email: string
+  resetPasswordToken?: string | null
+  resetPasswordExpiration?: string | null
+  emailVerified?: boolean
+  emailVerificationToken?: string | null
+  emailVerificationExpires?: string | null
+  collection: 'adminUsers'
+}
+
+type UserOrAdmin = (PayloadUser & { isUser?: boolean }) | (AdminUser & { isAdminUser?: boolean })
+
+export async function getUser(): Promise<UserOrAdmin | null> {
   try {
     const headers = await getHeaders()
     const headersObj = new Headers()
@@ -78,7 +96,10 @@ export async function getUser(): Promise<User | null> {
 
     const { user } = await payload.auth({ headers: headersObj })
     if (user && user.collection === 'users') {
-      return user as User
+      return { ...user, isUser: true }
+    }
+    if (user && user.collection === 'adminUsers') {
+      return { ...user, isAdminUser: true }
     }
     return null
   } catch (error) {
