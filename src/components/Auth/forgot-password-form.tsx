@@ -49,7 +49,7 @@ export function ForgotPasswordForm() {
 
   if (isSuccess) {
     return (
-      <div className="space-y-4 text-center my-6">
+      <div className="my-6 space-y-4 text-center">
         <p className="text-muted-foreground">Check your email for the password reset link.</p>
         <Link href="/login" className="text-foreground hover:underline">
           Return to login
@@ -59,7 +59,7 @@ export function ForgotPasswordForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="grid gap-6 my-6">
+    <form onSubmit={handleSubmit} className="my-6 grid gap-6">
       <input
         type="email"
         name="email"
@@ -67,7 +67,7 @@ export function ForgotPasswordForm() {
         placeholder="Email address"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        className="w-full focus:outline-none border-b pb-2 h-8"
+        className="h-8 w-full border-b pb-2 focus:outline-none"
         required
       />
 

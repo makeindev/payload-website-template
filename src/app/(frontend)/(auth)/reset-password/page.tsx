@@ -110,7 +110,7 @@ function ResetPasswordForm() {
         <Container>
           <AuthBox>
             <h1>Invalid Reset Link</h1>
-            <p className="text-muted-foreground mb-4">
+            <p className="mb-4 text-muted-foreground">
               This password reset link is invalid or has expired.
             </p>
             <div className="text-center">
@@ -129,7 +129,7 @@ function ResetPasswordForm() {
       <Container>
         <AuthBox>
           <h1>Reset Password</h1>
-          <p className="text-muted-foreground mb-4">Enter your new password below.</p>
+          <p className="mb-4 text-muted-foreground">Enter your new password below.</p>
 
           {isSuccess ? (
             <div className="space-y-4 text-center">
@@ -139,12 +139,12 @@ function ResetPasswordForm() {
               </Button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="grid gap-6 my-6">
+            <form onSubmit={handleSubmit} className="my-6 grid gap-6">
               <input
                 type="email"
                 value={email}
                 disabled
-                className="w-full focus:outline-none border-b pb-2 h-8 bg-muted text-muted-foreground"
+                className="h-8 w-full border-b bg-muted pb-2 text-muted-foreground focus:outline-none"
               />
 
               <input
@@ -154,7 +154,7 @@ function ResetPasswordForm() {
                 placeholder="New password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full focus:outline-none border-b pb-2 h-8"
+                className="h-8 w-full border-b pb-2 focus:outline-none"
                 required
               />
 
@@ -165,7 +165,7 @@ function ResetPasswordForm() {
                 placeholder="Confirm new password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full focus:outline-none border-b pb-2 h-8"
+                className="h-8 w-full border-b pb-2 focus:outline-none"
                 required
               />
 

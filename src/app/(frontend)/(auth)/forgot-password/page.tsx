@@ -21,7 +21,7 @@ export default async function ForgotPasswordPage() {
       <Container>
         <AuthBox>
           <h1>Forgot Password</h1>
-          <p className="text-muted-foreground mb-4">
+          <p className="mb-4 text-muted-foreground">
             Enter your email address and we&apos;ll send you a link to reset your password.
           </p>
           <ForgotPasswordForm />

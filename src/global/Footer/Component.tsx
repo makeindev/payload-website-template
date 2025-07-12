@@ -15,12 +15,12 @@ export async function Footer() {
   const navItems = footerData?.navItems || []
 
   return (
-    <footer className="border-t bg-accent/30 mt-auto">
+    <footer className="mt-auto border-t bg-accent/30">
       <Section>
-        <Container className="grid gap-2 grid-cols-1 md:grid-cols-[1fr_auto]">
+        <Container className="grid grid-cols-1 gap-2 md:grid-cols-[1fr_auto]">
           <div className="grid gap-2">
             <FooterClient footerData={footerData} />
-            <p className="text-muted-foreground px-3">
+            <p className="px-3 text-muted-foreground">
               <Balancer>
                 A Modern, Open-Source Website Starter — Built with Next.js & Payload CMS
               </Balancer>
@@ -38,7 +38,7 @@ export async function Footer() {
                 </>
               )}
             </nav>
-            <p className="text-muted-foreground text-xs  px-3">
+            <p className="px-3 text-xs text-muted-foreground">
               ©{' '}
               <a href="https://github.com/makeindev" className="hover:underline">
                 MakeinDev

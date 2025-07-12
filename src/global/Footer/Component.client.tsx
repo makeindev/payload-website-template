@@ -29,7 +29,7 @@ export function FooterClient({ footerData }: { footerData: FooterType }) {
         ) : (
           <Logo size="medium" loading="eager" priority="high" className="invert dark:invert-0" />
         )}
-        <span className="font-bold ml-4">Website Template</span>
+        <span className="ml-4 font-bold">Website Template</span>
       </span>
     </Link>
   )

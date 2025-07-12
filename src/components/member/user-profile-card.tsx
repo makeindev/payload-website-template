@@ -84,7 +84,7 @@ export function UserProfileCard({ accountAgeDays, setUser, user }: UserProfileCa
         <div className="flex items-center gap-4">
           <Avatar className="h-16 w-16">
             <AvatarImage src="" alt={user.email} />
-            <AvatarFallback className="text-lg font-semibold bg-primary/10 text-primary">
+            <AvatarFallback className="bg-primary/10 text-lg font-semibold text-primary">
               {getInitials(user.email)}
             </AvatarFallback>
           </Avatar>
@@ -153,11 +153,11 @@ export function UserProfileCard({ accountAgeDays, setUser, user }: UserProfileCa
               className="justify-start"
               onClick={() => setShowEditProfile(true)}
             >
-              <Edit className="h-4 w-4 mr-2" />
+              <Edit className="mr-2 h-4 w-4" />
               Edit Profile
             </Button>
             <Button variant="outline" size="sm" className="justify-start">
-              <Settings className="h-4 w-4 mr-2" />
+              <Settings className="mr-2 h-4 w-4" />
               Settings
             </Button>
           </div>
@@ -167,11 +167,11 @@ export function UserProfileCard({ accountAgeDays, setUser, user }: UserProfileCa
       {/* Edit Profile Modal */}
       {showEditProfile && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="bg-card rounded-xl shadow-2xl max-w-md w-full p-0 relative border border-border">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-border rounded-t-xl">
+          <div className="relative w-full max-w-md rounded-xl border border-border bg-card p-0 shadow-2xl">
+            <div className="flex items-center justify-between rounded-t-xl border-b border-border px-6 py-4">
               <h3 className="text-lg font-semibold">Edit Profile</h3>
               <button
-                className="text-2xl font-bold text-muted-foreground hover:text-foreground transition-colors"
+                className="text-2xl font-bold text-muted-foreground transition-colors hover:text-foreground"
                 onClick={() => setShowEditProfile(false)}
                 aria-label="Close"
               >
@@ -179,7 +179,7 @@ export function UserProfileCard({ accountAgeDays, setUser, user }: UserProfileCa
               </button>
             </div>
             <form
-              className="px-6 py-4 space-y-4"
+              className="space-y-4 px-6 py-4"
               onSubmit={(e) => {
                 e.preventDefault()
                 handleSaveName()
@@ -188,14 +188,14 @@ export function UserProfileCard({ accountAgeDays, setUser, user }: UserProfileCa
               <div>
                 <label
                   htmlFor="edit-name"
-                  className="block text-sm font-medium mb-1 text-muted-foreground"
+                  className="mb-1 block text-sm font-medium text-muted-foreground"
                 >
                   Name
                 </label>
                 <input
                   id="edit-name"
                   type="text"
-                  className="w-full rounded border border-border bg-muted/60 dark:bg-muted/30 px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full rounded border border-border bg-muted/60 px-3 py-2 text-foreground focus:outline-none focus:ring-2 focus:ring-primary dark:bg-muted/30"
                   value={editName}
                   onChange={(e) => setEditName(e.target.value)}
                   disabled={editLoading}

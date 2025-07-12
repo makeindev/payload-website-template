@@ -37,7 +37,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {/* Use the custom AdminBarWrapper for draftMode awareness */}
             {await AdminBarWrapper()}
             <Header />
-            <div className="max-w-7xl mx-auto">{children}</div>
+            <div className="mx-auto max-w-7xl">{children}</div>
             <Footer />
           </Providers>
         </ThemeProvider>

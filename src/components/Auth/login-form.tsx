@@ -60,13 +60,13 @@ export const LoginForm = () => {
   }
 
   return (
-    <form className="grid gap-6 my-6" onSubmit={handleSubmit}>
+    <form className="my-6 grid gap-6" onSubmit={handleSubmit}>
       <input
         type="email"
         name="email"
         placeholder="Email"
         autoComplete="email"
-        className="w-full focus:outline-none border-b pb-2 h-8"
+        className="h-8 w-full border-b pb-2 focus:outline-none"
         required
       />
 
@@ -76,7 +76,7 @@ export const LoginForm = () => {
           name="password"
           placeholder="Password"
           autoComplete="current-password"
-          className="w-full focus:outline-none border-b pb-2 h-8 pr-10"
+          className="h-8 w-full border-b pb-2 pr-10 focus:outline-none"
           required
         />
         <button
@@ -103,7 +103,7 @@ export const LoginForm = () => {
           onChange={(e) => setRememberMe(e.target.checked)}
           className="rounded border-gray-300 text-primary focus:ring-primary"
         />
-        <label htmlFor="remember-me" className="text-sm text-muted-foreground cursor-pointer">
+        <label htmlFor="remember-me" className="cursor-pointer text-sm text-muted-foreground">
           Remember me for 30 days
         </label>
       </div>

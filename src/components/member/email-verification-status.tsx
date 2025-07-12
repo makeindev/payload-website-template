@@ -71,7 +71,7 @@ export function EmailVerificationStatus({ user }: EmailVerificationStatusProps) 
             <XCircle className="h-4 w-4" />
             <div className="ml-2">
               <p className="text-sm font-medium">Email not verified</p>
-              <p className="text-sm text-muted-foreground mt-1">
+              <p className="mt-1 text-sm text-muted-foreground">
                 Please verify your email address to secure your account and access all features.
               </p>
             </div>
@@ -93,12 +93,12 @@ export function EmailVerificationStatus({ user }: EmailVerificationStatusProps) 
           >
             {isResending ? (
               <>
-                <RefreshCw className="h-4 w-4 mr-2 animate-spin" />
+                <RefreshCw className="mr-2 h-4 w-4 animate-spin" />
                 Sending...
               </>
             ) : (
               <>
-                <Mail className="h-4 w-4 mr-2" />
+                <Mail className="mr-2 h-4 w-4" />
                 Resend Verification Email
               </>
             )}

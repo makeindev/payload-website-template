@@ -137,7 +137,7 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
               <div key={index} className="flex items-center justify-between">
                 <div className="flex items-center gap-3">
                   <div
-                    className={`p-1.5 rounded-full ${
+                    className={`rounded-full p-1.5 ${
                       feature.status
                         ? 'bg-green-100 text-green-600 dark:bg-green-900/20 dark:text-green-400'
                         : 'bg-gray-100 text-gray-400 dark:bg-gray-800 dark:text-gray-500'
@@ -166,15 +166,15 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
         <div className="space-y-4">
           <h4 className="text-sm font-medium">Recent Login</h4>
           {user.loginHistory && user.loginHistory.length > 0 ? (
-            <div className="rounded-lg bg-muted/60 dark:bg-muted/30 p-3 shadow-sm border border-border">
-              <div className="flex items-center gap-2 text-sm mb-1">
+            <div className="rounded-lg border border-border bg-muted/60 p-3 shadow-sm dark:bg-muted/30">
+              <div className="mb-1 flex items-center gap-2 text-sm">
                 <span className="font-medium text-muted-foreground">Date:</span>
                 <span className="text-foreground">
                   {new Date(user.loginHistory[user.loginHistory.length - 1].date).toLocaleString()}
                 </span>
               </div>
               {user.loginHistory[user.loginHistory.length - 1].ip && (
-                <div className="flex items-center gap-2 text-sm mb-1">
+                <div className="mb-1 flex items-center gap-2 text-sm">
                   <span className="font-medium text-muted-foreground">IP:</span>
                   <span className="text-foreground">
                     {user.loginHistory[user.loginHistory.length - 1].ip}
@@ -185,7 +185,7 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
                 <div className="flex items-center gap-2 text-sm">
                   <span className="font-medium text-muted-foreground">Browser:</span>
                   <span
-                    className="truncate max-w-xs text-foreground"
+                    className="max-w-xs truncate text-foreground"
                     title={user.loginHistory[user.loginHistory.length - 1].userAgent!}
                   >
                     {user.loginHistory[user.loginHistory.length - 1].userAgent}
@@ -205,8 +205,8 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
           <h4 className="text-sm font-medium">Recommendations</h4>
           <div className="space-y-2">
             {!user.emailVerified && (
-              <div className="flex items-start gap-2 p-3 rounded-lg bg-yellow-50 dark:bg-yellow-900/20">
-                <AlertTriangle className="h-4 w-4 text-yellow-600 mt-0.5" />
+              <div className="flex items-start gap-2 rounded-lg bg-yellow-50 p-3 dark:bg-yellow-900/20">
+                <AlertTriangle className="mt-0.5 h-4 w-4 text-yellow-600" />
                 <div>
                   <p className="text-sm font-medium text-yellow-800 dark:text-yellow-200">
                     Verify your email address
@@ -224,11 +224,11 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
       {/* Modal for Login History */}
       {showLoginHistory && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-          <div className="bg-card rounded-xl shadow-2xl max-w-lg w-full p-0 relative border border-border">
-            <div className="flex items-center justify-between px-6 py-4 border-b border-border rounded-t-xl">
+          <div className="relative w-full max-w-lg rounded-xl border border-border bg-card p-0 shadow-2xl">
+            <div className="flex items-center justify-between rounded-t-xl border-b border-border px-6 py-4">
               <h3 className="text-lg font-semibold">Login History</h3>
               <button
-                className="text-2xl font-bold text-muted-foreground hover:text-foreground transition-colors"
+                className="text-2xl font-bold text-muted-foreground transition-colors hover:text-foreground"
                 onClick={() => setShowLoginHistory(false)}
                 aria-label="Close"
               >
@@ -239,20 +239,20 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
               {loginHistory.length === 0 ? (
                 <div className="text-sm text-muted-foreground">No login history recorded yet.</div>
               ) : (
-                <div className="space-y-3 max-h-80 overflow-y-auto pr-2">
+                <div className="max-h-80 space-y-3 overflow-y-auto pr-2">
                   {paginatedHistory.map((entry, idx) => (
                     <div
                       key={idx}
-                      className="rounded-lg bg-muted/60 dark:bg-muted/30 p-3 mb-2 last:mb-0 shadow-sm border border-border"
+                      className="mb-2 rounded-lg border border-border bg-muted/60 p-3 shadow-sm last:mb-0 dark:bg-muted/30"
                     >
-                      <div className="flex items-center gap-2 text-sm mb-1">
+                      <div className="mb-1 flex items-center gap-2 text-sm">
                         <span className="font-medium text-muted-foreground">Date:</span>
                         <span className="text-foreground">
                           {new Date(entry.date).toLocaleString()}
                         </span>
                       </div>
                       {entry.ip && (
-                        <div className="flex items-center gap-2 text-sm mb-1">
+                        <div className="mb-1 flex items-center gap-2 text-sm">
                           <span className="font-medium text-muted-foreground">IP:</span>
                           <span className="text-foreground">{entry.ip}</span>
                         </div>
@@ -261,7 +261,7 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
                         <div className="flex items-center gap-2 text-sm">
                           <span className="font-medium text-muted-foreground">Browser:</span>
                           <span
-                            className="truncate max-w-xs text-foreground"
+                            className="max-w-xs truncate text-foreground"
                             title={entry.userAgent!}
                           >
                             {entry.userAgent}
@@ -274,7 +274,7 @@ export function SecurityOverview({ user }: SecurityOverviewProps) {
               )}
               {/* Pagination Controls */}
               {totalPages > 1 && (
-                <div className="flex justify-between items-center mt-4 gap-2">
+                <div className="mt-4 flex items-center justify-between gap-2">
                   <Button
                     variant="outline"
                     size="sm"
