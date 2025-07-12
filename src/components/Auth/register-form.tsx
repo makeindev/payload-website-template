@@ -110,7 +110,7 @@ export const RegisterForm = () => {
   }
 
   return (
-    <form className="grid gap-6 my-6" onSubmit={handleSubmit}>
+    <form className="my-6 grid gap-6" onSubmit={handleSubmit}>
       <input
         type="email"
         name="email"
@@ -118,7 +118,7 @@ export const RegisterForm = () => {
         onChange={(e) => setEmail(e.target.value)}
         autoComplete="email"
         placeholder="Email"
-        className="w-full focus:outline-none border-b pb-2"
+        className="w-full border-b pb-2 focus:outline-none"
         required
       />
 
@@ -130,7 +130,7 @@ export const RegisterForm = () => {
           onChange={(e) => setPassword(e.target.value)}
           autoComplete="new-password"
           placeholder="Password"
-          className="w-full focus:outline-none border-b pb-2 pr-10"
+          className="w-full border-b pb-2 pr-10 focus:outline-none"
           required
         />
         <button
@@ -146,7 +146,7 @@ export const RegisterForm = () => {
 
       {password && (
         <div className="mt-1">
-          <div className="flex gap-1 h-1 mt-1">
+          <div className="mt-1 flex h-1 gap-1">
             <div
               className={`h-full w-1/3 rounded-l ${passwordStrength ? 'bg-red-500' : 'bg-gray-200'}`}
             ></div>
@@ -157,11 +157,11 @@ export const RegisterForm = () => {
               className={`h-full w-1/3 rounded-r ${passwordStrength === 'strong' ? 'bg-green-500' : 'bg-gray-200'}`}
             ></div>
           </div>
-          {passwordFeedback && <p className="text-xs text-amber-600 mt-1">{passwordFeedback}</p>}
+          {passwordFeedback && <p className="mt-1 text-xs text-amber-600">{passwordFeedback}</p>}
         </div>
       )}
 
-      <div className="text-xs text-muted-foreground mt-2">
+      <div className="mt-2 text-xs text-muted-foreground">
         Password must be at least 8 characters with uppercase, lowercase, number, and special
         character.
       </div>

@@ -7,8 +7,8 @@ import type { Page } from '@/payload-types'
 
 export const MediumImpactHero: React.FC<Page['hero']> = ({ links, media, richText }) => {
   return (
-    <div className="relative w-full min-h-[60vh] flex flex-col justify-center items-center overflow-hidden">
-      <div className="absolute top-0 left-0 w-full z-20 pt-12">
+    <div className="relative flex min-h-[60vh] w-full flex-col items-center justify-center overflow-hidden">
+      <div className="absolute left-0 top-0 z-20 w-full pt-12">
         <div className="container">
           {richText && <RichText className="mb-6" data={richText} enableGutter={false} />}
           {Array.isArray(links) && links.length > 0 && (
@@ -25,9 +25,9 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({ links, media, richTex
         </div>
       </div>
       {media && typeof media === 'object' && (
-        <div className="absolute inset-0 w-full h-full flex items-center justify-center z-0">
+        <div className="absolute inset-0 z-0 flex h-full w-full items-center justify-center">
           <Media
-            className="w-full h-full object-cover"
+            className="h-full w-full object-cover"
             imgClassName="w-full h-full object-cover"
             fill
             priority
@@ -36,7 +36,7 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({ links, media, richTex
         </div>
       )}
       {media && typeof media === 'object' && media.caption && (
-        <div className="container z-10 relative mt-3">
+        <div className="container relative z-10 mt-3">
           <RichText data={media.caption} enableGutter={false} />
         </div>
       )}

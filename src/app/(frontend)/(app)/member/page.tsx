@@ -26,7 +26,7 @@ export default async function Member() {
     <Section>
       <Container>
         {/* Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
             <Prose>
               <h1>Member Area</h1>
@@ -44,7 +44,7 @@ export default async function Member() {
         {/* Main Member Grid */}
         <div className="grid gap-6 lg:grid-cols-3">
           {/* Left Column - Profile and Email Verification */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="space-y-6 lg:col-span-2">
             <UserProfileCard user={user} accountAgeDays={accountAgeDays} />
 
             {/* Email Verification - Only show if not verified */}

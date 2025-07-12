@@ -1,8 +1,10 @@
 import React, { Fragment } from 'react'
 
+import { AboutBlock } from '@/blocks/AboutBlock/components'
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
+import { FeatureBlock } from '@/blocks/FeatureBlock/components'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import type { Page } from '@/payload-types'
@@ -13,6 +15,8 @@ const blockComponents = {
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
+  about: AboutBlock,
+  feature: FeatureBlock,
 }
 
 export const RenderBlocks: React.FC<{

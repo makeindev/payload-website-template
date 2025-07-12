@@ -9,6 +9,7 @@ export async function POST(req: NextRequest) {
   const { emailTo, subject, template } = await req.json()
 
   // Use Payload's generated type for the global
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   const emailSettings = (await payload.findGlobal({ slug: 'emailSettings' })) as any
 
   const to = emailTo || emailSettings.emailTo || 'makeindev@gmail.com'

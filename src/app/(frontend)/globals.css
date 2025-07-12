@@ -89,8 +89,76 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground min-h-[100vh] flex flex-col;
+    @apply flex min-h-[100vh] flex-col bg-background text-foreground;
   }
+}
+
+/* Circle progress */
+.circle-progress {
+  @apply fill-none stroke-primary;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Swiper pagination style */
+.teams .swiper-pagination {
+  @apply -mb-2.5;
+}
+
+.teams .swiper-pagination-bullet {
+  @apply h-2 w-2 transition-all duration-300;
+}
+
+.teams .swiper-pagination-bullet-active {
+  @apply h-3 w-3;
+}
+
+/* about slider */
+.aboutUsTestimonials .swiper-pagination {
+  @apply !bottom-[100px] md:!bottom-[120px];
+}
+
+.aboutUsTestimonials .swiper-pagination-bullet {
+  @apply h-10 w-8 overflow-hidden rounded-full transition-all duration-100 md:h-[60px] md:w-[60px];
+}
+
+.aboutUsTestimonials .swiper-pagination-bullet-active {
+  @apply h-12 w-12 shadow md:h-[100px] md:w-[100px];
+}
+
+/* faqs-cta */
+.faqs-cta {
+  background: var(
+    --tailwindcss-color-palette-slate-gradient-2,
+    linear-gradient(90deg, rgba(241, 245, 249, 0) 0%, #c6d6e7 100%)
+  );
+}
+
+/* apex chart style */
+.apexcharts-canvas .apexcharts-tooltip {
+  @apply dark:!text-primary-foreground;
+}
+/* apexcharts-tooltip-title */
+/* apexcharts-tooltip-series-group */
+.apexcharts-canvas .apexcharts-tooltip-marker {
+  @apply dark:!bg-primary-foreground;
+}
+/* apexcharts-tooltip-text */
+
+.actionLessLineChart .apexcharts-xaxis,
+.apexcharts-xaxis-tick {
+  display: none !important;
+}
+
+/* vectorMap style */
+.vectorMap svg path {
+  @apply cursor-pointer outline-none hover:fill-primary;
+}
+
+/* Code result viewer */
+.code-result pre {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
 }
 
 html {

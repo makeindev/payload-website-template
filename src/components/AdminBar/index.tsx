@@ -8,10 +8,10 @@ import { useSelectedLayoutSegments } from 'next/navigation'
 // import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
+import { Button } from '@/components/ui/button'
 import { getUser } from '@/lib/auth'
 import { getClientSideURL } from '@/utilities/getURL'
 import { cn } from '@/utilities/ui'
-import { Button } from '@/components/ui/button'
 
 const baseClass = 'admin-bar'
 
@@ -30,7 +30,7 @@ const collectionLabels = {
   },
 }
 
-const Title: React.FC = () => <span className="text-foreground font-bold">Admin Bar</span>
+const Title: React.FC = () => <span className="font-bold text-foreground">Admin Bar</span>
 
 export const AdminBar: React.FC<{ preview?: boolean }> = ({ preview }) => {
   const segments = useSelectedLayoutSegments()
@@ -58,7 +58,7 @@ export const AdminBar: React.FC<{ preview?: boolean }> = ({ preview }) => {
   if (!show) return null
 
   return (
-    <div className={cn(baseClass, 'py-2 bg-card text-foreground', { block: show, hidden: !show })}>
+    <div className={cn(baseClass, 'bg-card py-2 text-foreground', { block: show, hidden: !show })}>
       <div className="container flex items-center justify-between gap-4 text-foreground">
         <div className="flex items-center gap-3">
           <Title />

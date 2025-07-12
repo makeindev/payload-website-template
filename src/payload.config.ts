@@ -1,5 +1,7 @@
 import { vercelPostgresAdapter } from '@payloadcms/db-vercel-postgres'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { SupportedLanguages } from '@payloadcms/translations'
+import { en } from '@payloadcms/translations/languages/en'
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
 import sharp from 'sharp' // sharp-import
@@ -18,6 +20,7 @@ import { EmailSettings } from '@/global/Email/config'
 import { Footer } from '@/global/Footer/config'
 import { Header } from '@/global/Header/config'
 import { Homepage } from '@/global/Homepage'
+import { id } from '@/lib/translations/id'
 import { plugins } from '@/plugins'
 import { getServerSideURL } from '@/utilities/getURL'
 
@@ -79,6 +82,10 @@ export default buildConfig({
   // This config helps us configure global or default features that the other editors can inherit
   editor: defaultLexical,
   globals: [EmailSettings, Header, Footer, Homepage],
+  i18n: {
+    fallbackLanguage: 'en',
+    supportedLanguages: { en, id } as SupportedLanguages,
+  },
   jobs: {
     access: {
       run: ({ req }: { req: PayloadRequest }): boolean => {

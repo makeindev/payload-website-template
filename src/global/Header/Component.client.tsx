@@ -35,7 +35,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data, user }) => {
 
   return (
     <header
-      className="container max-w-7xl relative z-20"
+      className="container relative z-20 max-w-7xl"
       {...(theme ? { 'data-theme': theme } : {})}
     >
       <div className="py-8 flex items-center justify-between">

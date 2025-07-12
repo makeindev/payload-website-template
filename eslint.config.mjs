@@ -18,7 +18,6 @@ const eslintConfig = [
     files: ['**/*.ts', '**/*.tsx'],
     plugins: {
       prettier,
-      'sort-keys-custom-order': sortKeysCustomOrder,
       'simple-import-sort': simpleImportSort,
     },
     rules: {
@@ -40,6 +39,15 @@ const eslintConfig = [
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
       'prettier/prettier': 'warn',
+    },
+  },
+  // sorting keys for `collections` and `global` dir
+  {
+    files: ['./src/collections/**/*.ts', './src/global/**/*.ts'],
+    plugins: {
+      'sort-keys-custom-order': sortKeysCustomOrder,
+    },
+    rules: {
       'sort-keys-custom-order/object-keys': [
         'warn',
         {

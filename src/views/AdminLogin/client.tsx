@@ -15,7 +15,7 @@ const AdminLoginViewClient = () => {
     await oauth('auth0')
   }
   return (
-    <div className="w-full h-full bg-red-500">
+    <div className="h-full w-full bg-red-500">
       <div className="flex flex-col items-start gap-y-4">
         <Button type="button" onClick={handleGoogleSignin}>
           Signin with Google
