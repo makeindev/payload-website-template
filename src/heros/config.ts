@@ -31,6 +31,10 @@ export const hero: Field = {
           label: 'Low Impact',
           value: 'lowImpact',
         },
+        {
+          label: 'With Image',
+          value: 'withImage',
+        },
       ],
       required: true,
       type: 'select',
@@ -56,8 +60,37 @@ export const hero: Field = {
       },
     }),
     {
+      name: 'badgeText',
+      label: 'Badge Text',
+      type: 'text',
+      required: false,
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
+        condition: (_, { type }) => type === 'withImage',
+      },
+    },
+    {
+      name: 'badgeIconColor',
+      label: 'Badge Icon Color',
+      type: 'text',
+      required: false,
+      defaultValue: '#facc15',
+      admin: {
+        condition: (_, { type }) => type === 'withImage',
+      },
+    },
+    {
+      name: 'overlayColor',
+      label: 'Overlay Color',
+      type: 'text',
+      required: false,
+      defaultValue: 'rgba(0,0,0,0.5)',
+      admin: {
+        condition: (_, { type }) => type === 'withImage',
+      },
+    },
+    {
+      admin: {
+        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact','withImage'].includes(type),
       },
       name: 'media',
       relationTo: 'media',

@@ -12,6 +12,7 @@ export const Feature: Block = {
       options: [
         { label: 'Feature 1', value: 'feature1' },
         { label: 'Feature 2', value: 'feature2' },
+        { label: 'Feature 3', value: 'feature3' },
       ],
       required: true,
       type: 'select',
@@ -41,6 +42,24 @@ export const Feature: Block = {
           name: 'description',
           label: 'Description',
           type: 'text',
+        },
+        {
+          name: 'badge',
+          label: 'Badge',
+          type: 'text',
+          required: false,
+        },
+        {
+          name: 'badgeVariant',
+          label: 'Badge Variant',
+          type: 'select',
+          options: [
+            { label: 'Default', value: 'default' },
+            { label: 'Secondary', value: 'secondary' },
+            { label: 'Outline', value: 'outline' },
+            { label: 'Destructive', value: 'destructive' },
+          ],
+          required: false,
         },
       ],
     },
