@@ -7,7 +7,7 @@ import { CMSLink } from "@/components/Link";
 import { Media } from "@/components/Media";
 import type { Page } from "@/payload-types";
 
-export const WithImageHero: React.FC<Page['hero']> = ({ links, richText, media, badgeText, badgeIconColor, overlayColor }) => {
+export const WithImageHero: React.FC<Page['hero']> = ({ links, richText, descriptionRichText, media, badgeText, badgeIconColor, overlayColor }) => {
   return (
     <section className="relative w-full py-20 md:py-32 overflow-hidden">
       {/* Background Image (only from CMS/media prop) */}
@@ -28,6 +28,10 @@ export const WithImageHero: React.FC<Page['hero']> = ({ links, richText, media, 
 
           <div className="space-y-4 max-w-4xl">
             {richText && <RichText data={richText} enableGutter={false} />}
+          </div>
+
+          <div className="mx-auto max-w-2xl">
+            {richText && <RichText data={descriptionRichText} enableGutter={false} />}
           </div>
 
           {Array.isArray(links) && links.length > 0 && (
